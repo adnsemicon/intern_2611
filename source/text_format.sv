@@ -1,4 +1,3 @@
-`timescale 1ns / 1ps
 
 module text_formatting;
 
@@ -24,9 +23,11 @@ module text_formatting;
     #15;
 
     // 3. Your display statements
+    
     $display("Hex: 0x%0h, Dec: %0d, Bin: %0b, Float: %0.2f", 8'hA5, 8'd25, 4'b1010, 3.14159);
     $display("String: %s, Current Time: %0t, Module Hierarchy: %m", str, $time);
     $display("Pretty Structure Print: %p", packet_struct);
+    
   end
 
 endmodule
