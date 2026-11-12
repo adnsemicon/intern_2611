@@ -1,4 +1,4 @@
-module real_sram (
+module packed_unpacked_arrays (    
     input  logic              clk,
     input  logic              we,          // Write Enable (1 = write, 0 = read)
     input  logic [9:0]        addr,        // 10-bit address (0 to 1023)
