@@ -1,0 +1,241 @@
+<mxfile host="app.diagrams.net" modified="2026-11-15T15:00:00.000Z" agent="Antigravity" version="21.0.0" type="device">
+  <diagram id="arch_diagram" name="Architecture">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1060" pageHeight="680" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Background Box -->
+        <mxCell id="bg_frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="15" y="15" width="1025" height="645" as="geometry" />
+        </mxCell>
+
+        <!-- Header Box -->
+        <mxCell id="header_arch" value="&lt;b&gt;8-CHANNEL PWM CONTROLLER — INTERNAL ARCHITECTURE DECOMPOSITION&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontSize=14;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="260" y="28" width="530" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Top-Level Boundary Box -->
+        <mxCell id="top_boundary" value="&lt;b&gt;pwm_8ch_controller (Top-Level RTL Wrapper)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=3;dashed=1;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="35" y="70" width="980" height="570" as="geometry" />
+        </mxCell>
+
+        <!-- EXTERNAL BUS INPUTS (LEFT) -->
+        <mxCell id="wire_ext_addr" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="10" y="145" as="sourcePoint" />
+            <mxPoint x="80" y="145" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ext_addr" value="&lt;b&gt;addr[3:0]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="10" y="123" width="70" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wire_ext_wrdata" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="10" y="195" as="sourcePoint" />
+            <mxPoint x="80" y="195" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ext_wrdata" value="&lt;b&gt;wrdata[31:0]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="10" y="173" width="75" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wire_ext_ctrl" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="10" y="245" as="sourcePoint" />
+            <mxPoint x="80" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ext_ctrl" value="&lt;b&gt;wen, ren&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="10" y="223" width="70" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Read Data Output (Left) -->
+        <mxCell id="wire_ext_rdata" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="295" as="sourcePoint" />
+            <mxPoint x="10" y="295" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ext_rdata" value="&lt;b&gt;rdata[31:0]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="10" y="273" width="75" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- SUBMODULE 1: pwm_registers -->
+        <mxCell id="mod_regs" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;pwm_registers&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;i&gt;Bus Decoder &amp;amp; Register Bank&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2.5;align=center;verticalAlign=top;spacingTop=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="110" width="250" height="230" as="geometry" />
+        </mxCell>
+
+        <mxCell id="reg_ch0_7" value="&lt;b&gt;DUTY_CH0..7 Registers&lt;/b&gt;&lt;br&gt;Addr: 0x0 – 0x7 [7:0] Duty Values" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="160" width="220" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="reg_enable" value="&lt;b&gt;ENABLE_REG Register&lt;/b&gt;&lt;br&gt;Addr: 0x8 | Bit 0: Global | Bits 8:1: Ch 7:0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="205" width="220" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="reg_mux" value="&lt;b&gt;Address Decoder &amp;amp; Read MUX&lt;/b&gt;&lt;br&gt;Synchronous single-cycle readback" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="250" width="220" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="reg_clk_rst" value="&lt;i&gt;Clocked by clk, resets on arst_n&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=10;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="95" y="300" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- SUBMODULE 2: pwm_counter -->
+        <mxCell id="mod_counter" value="&lt;b&gt;&lt;font style=&quot;font-size: 15px;&quot;&gt;pwm_counter&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;i&gt;Shared Timing Reference Generator&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2.5;align=center;verticalAlign=top;spacingTop=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="380" width="250" height="205" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cnt_core" value="&lt;b&gt;8-Bit Up-Counter (0..255)&lt;/b&gt;&lt;br&gt;Synchronous to clk | Clears when arst_n=0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="435" width="220" height="38" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cnt_tick" value="&lt;b&gt;Period Tick Generator&lt;/b&gt;&lt;br&gt;1-cycle strobe @ rollover (count == 8'd255)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="485" width="220" height="38" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cnt_notes" value="&lt;i&gt;Counter increments when global_en == 1&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=10;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="95" y="540" width="220" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Global Enable wire from Registers to Counter -->
+        <mxCell id="wire_reg_to_cnt" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="205" y="340" as="sourcePoint" />
+            <mxPoint x="205" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_reg_to_cnt" value="&lt;b&gt;global_en&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="215" y="352" width="60" height="18" as="geometry" />
+        </mxCell>
+
+        <!-- SUBMODULE 3: pwm_channel [7:0] -->
+        <mxCell id="mod_channels" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;pwm_channel [7:0] Instances&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;i&gt;8 Parallel Glitch-Free Channel Engines&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2.5;align=center;verticalAlign=top;spacingTop=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="470" y="110" width="480" height="475" as="geometry" />
+        </mxCell>
+
+        <!-- Channel Slice [i] Architecture -->
+        <mxCell id="slice_box" value="&lt;b&gt;Individual Channel Slice [i] Internal Architecture&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;dashed=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="160" width="440" height="215" as="geometry" />
+        </mxCell>
+
+        <!-- Shadow Register -->
+        <mxCell id="box_shadow" value="&lt;b&gt;Shadow Register&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;duty_shadow[7:0]&lt;br&gt;Latches on period_tick&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="510" y="200" width="135" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Magnitude Comparator -->
+        <mxCell id="box_cmp" value="&lt;b&gt;Magnitude CMP&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;8-bit unsigned compare&lt;br&gt;counter &amp;lt; duty_shadow&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="750" y="200" width="145" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Wire from shadow to comparator (with generous 105px gap) -->
+        <mxCell id="wire_shadow_cmp" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="645" y="240" as="sourcePoint" />
+            <mxPoint x="750" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_shadow_val" value="duty_shadow[7:0]" style="text;html=1;align=center;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="645" y="218" width="105" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Output Gating Logic -->
+        <mxCell id="box_gate" value="&lt;b&gt;Output Gating AND Gate&lt;/b&gt;&lt;br&gt;global_en &amp;amp;&amp;amp; ch_en[i] &amp;amp;&amp;amp; cmp_out" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="620" y="305" width="275" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Wire from CMP to Gate -->
+        <mxCell id="wire_cmp_to_gate" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="820" y="275" as="sourcePoint" />
+            <mxPoint x="820" y="305" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_raw_pwm" value="cmp_out" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=9;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="826" y="282" width="50" height="18" as="geometry" />
+        </mxCell>
+
+        <!-- Multi-Channel Replication Details -->
+        <mxCell id="box_channel_array" value="&lt;b&gt;Replicated Channels (CH0 .. CH7):&lt;/b&gt;&lt;br&gt;• Each channel maintains an isolated shadow register.&lt;br&gt;• Individual channel enables (ch_en[0] .. ch_en[7]) qualify PWM outputs independently.&lt;br&gt;• Synchronous duty-cycle updates prevent truncated or runt pulses across all 8 channels." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;align=left;verticalAlign=top;spacingLeft=12;spacingTop=8;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="395" width="440" height="165" as="geometry" />
+        </mxCell>
+
+        <!-- INTER-MODULE WIRES (Clean Non-Overlapping Lanes) -->
+        <!-- Duty Cycle bus -->
+        <mxCell id="wire_duty_bus" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="175" as="sourcePoint" />
+            <mxPoint x="510" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="430" y="175" />
+              <mxPoint x="430" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_duty_bus" value="&lt;b&gt;duty_reg[0..7]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="340" y="153" width="85" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Enables bus -->
+        <mxCell id="wire_en_bus" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="235" as="sourcePoint" />
+            <mxPoint x="620" y="330" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="410" y="235" />
+              <mxPoint x="410" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_en_bus" value="&lt;b&gt;global_en, ch_en[7:0]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="335" y="213" width="120" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Counter value to Comparator -->
+        <mxCell id="wire_cnt_val" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="445" as="sourcePoint" />
+            <mxPoint x="750" y="260" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="390" y="445" />
+              <mxPoint x="390" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_cnt_val" value="&lt;b&gt;counter[7:0]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="340" y="423" width="85" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Period Tick to Shadow Register -->
+        <mxCell id="wire_period_tick" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="505" as="sourcePoint" />
+            <mxPoint x="510" y="260" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="450" y="505" />
+              <mxPoint x="450" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_period_tick" value="&lt;b&gt;period_tick&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="340" y="483" width="85" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- PWM OUTPUTS (RIGHT) -->
+        <mxCell id="wire_pwm_outs" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="895" y="332" as="sourcePoint" />
+            <mxPoint x="1010" y="332" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_pwm_outs" value="&lt;b&gt;pwm_out[7:0]&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;color:#444;&quot;&gt;8-Channel PWM Outputs&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontSize=11;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="900" y="295" width="120" height="32" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
