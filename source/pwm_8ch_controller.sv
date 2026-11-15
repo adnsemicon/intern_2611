@@ -3,7 +3,7 @@
 module pwm_8ch_controller #(
     parameter int NUM_CHANNELS = 8,
     parameter int ADDR_WIDTH   = 4,
-    parameter int DATA_WIDTH   = 32,
+    parameter int DATA_WIDTH   = 8,
     parameter int RESOLUTION   = 8,
     parameter int COUNTER_MAX  = 255
 )(
@@ -12,14 +12,12 @@ module pwm_8ch_controller #(
     input  logic [ADDR_WIDTH-1:0]   addr,
     input  logic [DATA_WIDTH-1:0]   wrdata,
     input  logic                    wen,
-    input  logic                    ren,
     output logic [DATA_WIDTH-1:0]   rdata,
     output logic [NUM_CHANNELS-1:0] pwm_out
 );
 
     // Internal inter-module signals
     logic [NUM_CHANNELS-1:0][RESOLUTION-1:0] duty_reg;
-    logic                                    global_en;
     logic [NUM_CHANNELS-1:0]                 ch_en;
     logic [RESOLUTION-1:0]                   counter;
     logic                                    period_tick;
@@ -36,10 +34,8 @@ module pwm_8ch_controller #(
         .addr      (addr),
         .wrdata    (wrdata),
         .wen       (wen),
-        .ren       (ren),
         .rdata     (rdata),
         .duty_reg  (duty_reg),
-        .global_en (global_en),
         .ch_en     (ch_en)
     );
 
@@ -50,7 +46,6 @@ module pwm_8ch_controller #(
     ) u_counter (
         .clk         (clk),
         .arst_n      (arst_n),
-        .global_en   (global_en),
         .counter     (counter),
         .period_tick (period_tick)
     );
@@ -64,7 +59,6 @@ module pwm_8ch_controller #(
             ) u_channel (
                 .clk         (clk),
                 .arst_n      (arst_n),
-                .global_en   (global_en),
                 .ch_en       (ch_en[i]),
                 .period_tick (period_tick),
                 .counter     (counter),

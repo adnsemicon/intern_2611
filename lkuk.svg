@@ -1,0 +1,698 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 1120" width="100%" height="100%" content="&lt;mxfile host=&quot;app.diagrams.net&quot;&gt;
+  &lt;diagram name=&quot;Architecture&quot; id=&quot;arch_decomp_8ch&quot;&gt;
+    &lt;mxGraphModel dx=&quot;1400&quot; dy=&quot;1100&quot; grid=&quot;1&quot; gridSize=&quot;10&quot; guides=&quot;1&quot; tooltips=&quot;1&quot; connect=&quot;1&quot; arrows=&quot;1&quot; fold=&quot;1&quot; page=&quot;1&quot; pageScale=&quot;1&quot; pageWidth=&quot;1400&quot; pageHeight=&quot;1120&quot; background=&quot;#FFFFFF&quot; math=&quot;0&quot; shadow=&quot;0&quot;&gt;
+      &lt;root&gt;
+        &lt;mxCell id=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;1&quot; parent=&quot;0&quot; /&gt;
+        &lt;mxCell id=&quot;bg_canvas&quot; value=&quot;&quot; style=&quot;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E2E8F0;strokeWidth=1.5;arcSize=2;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;10&quot; y=&quot;5&quot; width=&quot;1380&quot; height=&quot;1100&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;title&quot; value=&quot;8-Channel PWM Controller — Architecture Decomposition&quot; style=&quot;text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;fontColor=#0F172A;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;450&quot; y=&quot;18&quot; width=&quot;900&quot; height=&quot;40&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;clk_lbl&quot; value=&quot;clk&quot; style=&quot;text;html=1;fontSize=13;fontStyle=1;fontColor=#334155;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;765&quot; y=&quot;18&quot; width=&quot;45&quot; height=&quot;25&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;rst_lbl&quot; value=&quot;arst_n&quot; style=&quot;text;html=1;fontSize=13;fontStyle=1;fontColor=#334155;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;865&quot; y=&quot;18&quot; width=&quot;60&quot; height=&quot;25&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cfg&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;Configuration Inputs&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#2563EB&amp;amp;quot;&amp;amp;gt;wen · wrdata[7:0]&amp;amp;lt;br&amp;amp;gt;addr[3:0]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;200&quot; width=&quot;155&quot; height=&quot;100&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;dec&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;Address Decoder&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#2563EB&amp;amp;quot;&amp;amp;gt;(4-to-9)&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;220&quot; y=&quot;160&quot; width=&quot;145&quot; height=&quot;95&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cfg_dec&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cfg&quot; target=&quot;dec&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2563EB;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.25;entryX=0;entryY=0.68;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;regbox&quot; value=&quot;Register File (9 × 8-bit)&quot; style=&quot;swimlane;startSize=30;horizontal=1;fillColor=#FAF5FF;swimlaneFillColor=#FAF5FF;strokeColor=#8B5CF6;strokeWidth=1.5;fontSize=14;fontStyle=1;fontColor=#4C1D95;html=1;arcSize=4;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;420&quot; y=&quot;115&quot; width=&quot;230&quot; height=&quot;650&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty0&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG0&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 0&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;42&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty1&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG1&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 1&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;112&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty2&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG2&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 2&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;182&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty3&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG3&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 3&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;252&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty4&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG4&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 4&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;322&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty5&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG5&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 5&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;392&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty6&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG6&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 6&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;462&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;duty7&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;DUTY_REG7&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#64748B&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 7&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C4B5FD;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;532&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enreg&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;EN_REG&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#B45309&amp;amp;quot; size=&amp;amp;quot;1&amp;amp;quot;&amp;amp;gt;[7:0] · addr 8&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#F59E0B;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#92400E;align=center;&quot; vertex=&quot;1&quot; parent=&quot;regbox&quot;&gt;
+          &lt;mxGeometry x=&quot;22&quot; y=&quot;602&quot; width=&quot;186&quot; height=&quot;48&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_dec_reg&quot; value=&quot;sel[8:0]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;dec&quot; target=&quot;regbox&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#4F46E5;strokeWidth=1.5;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#4F46E5;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.143;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cfg_reg&quot; value=&quot;wrdata[7:0]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cfg&quot; target=&quot;regbox&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2563EB;strokeWidth=1.5;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;98&quot; y=&quot;440&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;readmux&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;READ MUX&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#6D28D9&amp;amp;quot;&amp;amp;gt;9:1 · 8-bit&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=25;fillColor=#F5F3FF;strokeColor=#8B5CF6;strokeWidth=1.5;fontSize=14;fontStyle=1;fontColor=#4C1D95;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;220&quot; y=&quot;790&quot; width=&quot;170&quot; height=&quot;85&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;readout&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;rdata[7:0]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;fontSize=13.5;fontStyle=1;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;20&quot; y=&quot;810&quot; width=&quot;150&quot; height=&quot;40&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_reg_rm&quot; value=&quot;register data&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;readmux&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#8B5CF6;strokeWidth=1.5;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#8B5CF6;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.88;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;535&quot; y=&quot;833&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_rm_ro&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;readmux&quot; target=&quot;readout&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#8B5CF6;strokeWidth=1.5;endArrow=block;endFill=1;exitX=0.06;exitY=0.5;entryX=1;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cfg_rm&quot; value=&quot;addr[3:0]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cfg&quot; target=&quot;readmux&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#2563EB;strokeWidth=1.5;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.25;entryY=0;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;98&quot; y=&quot;750&quot; /&gt;
+              &lt;mxPoint x=&quot;262&quot; y=&quot;750&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;counter&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;SHARED COUNTER&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#047857&amp;amp;quot;&amp;amp;gt;8-bit · 0–255&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;720&quot; y=&quot;45&quot; width=&quot;210&quot; height=&quot;75&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_clk_cnt&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;clk_lbl&quot; target=&quot;counter&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#334155;strokeWidth=1.2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.32;entryY=0;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_rst_cnt&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;rst_lbl&quot; target=&quot;counter&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#334155;strokeWidth=1.2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.74;entryY=0;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp0&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP0&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[0]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;150&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_0&quot; value=&quot;cnt[7:0]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp0&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;entryX=0.5;entryY=0;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_0&quot; value=&quot;duty[0]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp0&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.1015;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux0&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;141&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_0&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;191&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_0&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_0&quot; target=&quot;mux0&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux0&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp0&quot; target=&quot;mux0&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;181&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;161&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out0&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[0]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;158&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout0&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux0&quot; target=&quot;out0&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux0&quot; value=&quot;en[0]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux0&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;940&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;940&quot; y=&quot;235&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;235&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp1&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP1&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[1]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;255&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_1&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp1&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;85&quot; /&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;270&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_1&quot; value=&quot;duty[1]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp1&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.2092;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux1&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;246&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_1&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;296&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_1&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_1&quot; target=&quot;mux1&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux1&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp1&quot; target=&quot;mux1&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;286&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;266&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out1&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[1]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;263&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout1&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux1&quot; target=&quot;out1&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux1&quot; value=&quot;en[1]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux1&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;936&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;936&quot; y=&quot;340&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;340&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp2&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP2&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[2]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;360&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_2&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp2&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;85&quot; /&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;375&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_2&quot; value=&quot;duty[2]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp2&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.3169;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux2&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;351&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_2&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;401&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_2&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_2&quot; target=&quot;mux2&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux2&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp2&quot; target=&quot;mux2&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;391&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;371&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out2&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[2]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;368&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout2&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux2&quot; target=&quot;out2&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux2&quot; value=&quot;en[2]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux2&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;932&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;932&quot; y=&quot;445&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;445&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp3&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP3&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[3]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;465&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_3&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp3&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;85&quot; /&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;480&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_3&quot; value=&quot;duty[3]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp3&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.4246;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux3&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;456&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_3&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;506&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_3&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_3&quot; target=&quot;mux3&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux3&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp3&quot; target=&quot;mux3&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;496&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;476&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out3&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[3]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;473&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout3&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux3&quot; target=&quot;out3&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux3&quot; value=&quot;en[3]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux3&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;928&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;928&quot; y=&quot;550&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;550&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp4&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP4&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[4]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;570&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_4&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp4&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;85&quot; /&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;585&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_4&quot; value=&quot;duty[4]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp4&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5323;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux4&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;561&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_4&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;611&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_4&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_4&quot; target=&quot;mux4&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux4&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp4&quot; target=&quot;mux4&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;601&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;581&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out4&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[4]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;578&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout4&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux4&quot; target=&quot;out4&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux4&quot; value=&quot;en[4]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux4&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;924&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;924&quot; y=&quot;655&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;655&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp5&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP5&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[5]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;675&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_5&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp5&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;85&quot; /&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;690&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_5&quot; value=&quot;duty[5]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp5&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.64;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux5&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;666&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_5&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;716&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_5&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_5&quot; target=&quot;mux5&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux5&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp5&quot; target=&quot;mux5&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;706&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;686&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out5&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[5]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;683&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout5&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux5&quot; target=&quot;out5&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux5&quot; value=&quot;en[5]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux5&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;920&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;920&quot; y=&quot;760&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;760&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp6&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP6&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[6]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;780&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_6&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp6&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;85&quot; /&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;795&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_6&quot; value=&quot;duty[6]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp6&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.7477;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux6&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;771&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_6&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;821&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_6&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_6&quot; target=&quot;mux6&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux6&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp6&quot; target=&quot;mux6&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;811&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;791&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out6&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[6]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;788&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout6&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux6&quot; target=&quot;out6&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux6&quot; value=&quot;en[6]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux6&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;916&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;916&quot; y=&quot;865&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;865&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmp7&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;CMP7&amp;amp;lt;/b&amp;amp;gt;&amp;amp;lt;br&amp;amp;gt;&amp;amp;lt;font color=&amp;amp;quot;#059669&amp;amp;quot;&amp;amp;gt;cnt &amp;amp;amp;lt; duty[7]&amp;amp;lt;/font&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#A7F3D0;strokeWidth=1.2;fontSize=13;fontColor=#1E293B;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;760&quot; y=&quot;885&quot; width=&quot;145&quot; height=&quot;62&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_cnt_cmp_7&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;counter&quot; target=&quot;cmp7&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#059669;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=11;fontStyle=1;fontColor=#059669;labelBackgroundColor=#FFFFFF;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;85&quot; /&gt;
+              &lt;mxPoint x=&quot;700&quot; y=&quot;900&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_duty_cmp_7&quot; value=&quot;duty[7]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;regbox&quot; target=&quot;cmp7&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#64748B;strokeWidth=1.3;endArrow=block;endFill=1;fontSize=10;fontColor=#475569;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.8554;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;mux7&quot; value=&quot;&quot; style=&quot;shadow=0;dashed=0;align=center;html=1;strokeWidth=1.5;strokeColor=#F59E0B;fillColor=#FEF3C7;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1015&quot; y=&quot;876&quot; width=&quot;60&quot; height=&quot;80&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;z_lbl_7&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;0&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=11;fontColor=#B45309;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;980&quot; y=&quot;926&quot; width=&quot;18&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;e_zero_7&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;z_lbl_7&quot; target=&quot;mux7&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#D97706;strokeWidth=1.3;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.75;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;cmpmux7&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;cmp7&quot; target=&quot;mux7&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#10B981;strokeWidth=1.5;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;916&quot; /&gt;
+              &lt;mxPoint x=&quot;955&quot; y=&quot;896&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;out7&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;pwm_out[7]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#065F46;align=center;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;1170&quot; y=&quot;893&quot; width=&quot;125&quot; height=&quot;45&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;muxout7&quot; value=&quot;&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;mux7&quot; target=&quot;out7&quot; style=&quot;edgeStyle=none;html=1;strokeColor=#047857;strokeWidth=1.8;endArrow=block;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;enmux7&quot; value=&quot;en[7]&quot; edge=&quot;1&quot; parent=&quot;1&quot; source=&quot;enreg&quot; target=&quot;mux7&quot; style=&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#D97706;strokeWidth=1.4;endArrow=block;endFill=1;fontSize=10;fontColor=#92400E;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0.5;entryY=1;&quot;&gt;
+          &lt;mxGeometry relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
+            &lt;Array as=&quot;points&quot;&gt;
+              &lt;mxPoint x=&quot;912&quot; y=&quot;741&quot; /&gt;
+              &lt;mxPoint x=&quot;912&quot; y=&quot;970&quot; /&gt;
+              &lt;mxPoint x=&quot;1045&quot; y=&quot;970&quot; /&gt;
+            &lt;/Array&gt;
+          &lt;/mxGeometry&gt;
+        &lt;/mxCell&gt;
+        &lt;mxCell id=&quot;legend&quot; value=&quot;&amp;amp;lt;b&amp;amp;gt;Output MUXes: In 1 = raw PWM (from CMP), In 0 = 0 (disabled), Sel = en[i]&amp;amp;lt;/b&amp;amp;gt;&quot; style=&quot;text;html=1;fontSize=13;fontColor=#334155;align=center;verticalAlign=middle;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;720&quot; y=&quot;1030&quot; width=&quot;650&quot; height=&quot;30&quot; as=&quot;geometry&quot; /&gt;
+        &lt;/mxCell&gt;
+      &lt;/root&gt;
+    &lt;/mxGraphModel&gt;
+  &lt;/diagram&gt;
+&lt;/mxfile&gt;">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .title { font-size: 22px; font-weight: 700; fill: #0F172A; text-anchor: middle; }
+      .box-head { font-size: 14px; font-weight: 700; fill: #1E293B; text-anchor: middle; }
+      .box-sub { font-size: 12px; font-weight: 600; fill: #2563EB; text-anchor: middle; }
+      .reg-title { font-size: 13.5px; font-weight: 700; fill: #1E293B; text-anchor: middle; }
+      .reg-sub { font-size: 11px; font-weight: 500; fill: #64748B; text-anchor: middle; }
+      .edge-lbl { font-size: 11px; font-weight: 600; fill: #334155; text-anchor: middle; }
+    </style>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/></marker>
+    <marker id="arr-indigo" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#4F46E5"/></marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#8B5CF6"/></marker>
+    <marker id="arr-slate" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B"/></marker>
+    <marker id="arr-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#059669"/></marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10B981"/></marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#D97706"/></marker>
+    <marker id="arr-darkgreen" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#047857"/></marker>
+  </defs>
+  <rect x="10" y="5" width="1380" height="1100" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+  <text x="900" y="42" class="title">8-Channel PWM Controller — Architecture Decomposition</text>
+  <text x="765" y="28" font-size="13" font-weight="700" fill="#334155">clk</text>
+  <text x="865" y="28" font-size="13" font-weight="700" fill="#334155">arst_n</text>
+  <rect x="20" y="200" width="155" height="100" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="97" y="230" class="box-head">Configuration Inputs</text>
+  <text x="97" y="254" class="box-sub">wen · wrdata[7:0]</text>
+  <text x="97" y="276" class="box-sub">addr[3:0]</text>
+  <rect x="220" y="160" width="145" height="95" rx="6" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="292" y="200" class="box-head">Address Decoder</text>
+  <text x="292" y="225" font-size="13" font-weight="600" fill="#2563EB" text-anchor="middle">(4-to-9)</text>
+  <rect x="420" y="115" width="230" height="650" rx="6" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="1.5"/>
+  <path d="M 420 115 L 650 115 A 6 6 0 0 1 650 145 L 420 145 Z" fill="#8B5CF6"/>
+  <text x="535" y="136" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">Register File (9 × 8-bit)</text>
+  <rect x="442" y="157" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="179" class="reg-title">DUTY_REG0</text>
+  <text x="535" y="195" class="reg-sub">[7:0] · addr 0</text>
+  <rect x="442" y="227" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="249" class="reg-title">DUTY_REG1</text>
+  <text x="535" y="265" class="reg-sub">[7:0] · addr 1</text>
+  <rect x="442" y="297" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="319" class="reg-title">DUTY_REG2</text>
+  <text x="535" y="335" class="reg-sub">[7:0] · addr 2</text>
+  <rect x="442" y="367" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="389" class="reg-title">DUTY_REG3</text>
+  <text x="535" y="405" class="reg-sub">[7:0] · addr 3</text>
+  <rect x="442" y="437" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="459" class="reg-title">DUTY_REG4</text>
+  <text x="535" y="475" class="reg-sub">[7:0] · addr 4</text>
+  <rect x="442" y="507" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="529" class="reg-title">DUTY_REG5</text>
+  <text x="535" y="545" class="reg-sub">[7:0] · addr 5</text>
+  <rect x="442" y="577" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="599" class="reg-title">DUTY_REG6</text>
+  <text x="535" y="615" class="reg-sub">[7:0] · addr 6</text>
+  <rect x="442" y="647" width="186" height="48" rx="5" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.2"/>
+  <text x="535" y="669" class="reg-title">DUTY_REG7</text>
+  <text x="535" y="685" class="reg-sub">[7:0] · addr 7</text>
+  <rect x="442" y="717" width="186" height="48" rx="5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="535" y="739" font-size="13.5" font-weight="700" fill="#92400E" text-anchor="middle">EN_REG</text>
+  <text x="535" y="755" font-size="11" font-weight="600" fill="#B45309" text-anchor="middle">[7:0] · addr 8</text>
+  <polygon points="245,790 390,790 365,875 220,875" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="1.5"/>
+  <text x="305" y="825" font-size="14" font-weight="700" fill="#4C1D95" text-anchor="middle">READ MUX</text>
+  <text x="305" y="848" font-size="12" font-weight="600" fill="#6D28D9" text-anchor="middle">9:1 · 8-bit</text>
+  <rect x="20" y="810" width="150" height="40" rx="5" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="95" y="835" font-size="13.5" font-weight="700" fill="#1E293B" text-anchor="middle">rdata[7:0]</text>
+  <rect x="720" y="45" width="210" height="75" rx="6" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="825" y="75" font-size="14" font-weight="700" fill="#065F46" text-anchor="middle">SHARED COUNTER</text>
+  <text x="825" y="98" font-size="12" font-weight="600" fill="#047857" text-anchor="middle">8-bit · 0–255</text>
+  <path d="M 175 225 L 220 225" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <path d="M 98 300 L 98 440 L 420 440" stroke="#2563EB" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="180" y="430" width="85" height="20" fill="#FFFFFF" rx="3"/>
+  <text x="222" y="444" class="edge-lbl">wrdata[7:0]</text>
+  <path d="M 98 300 L 98 750 L 260 750 L 260 790" stroke="#2563EB" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="120" y="740" width="65" height="20" fill="#FFFFFF" rx="3"/>
+  <text x="152" y="754" class="edge-lbl">addr[3:0]</text>
+  <path d="M 365 208 L 420 208" stroke="#4F46E5" stroke-width="1.5" marker-end="url(#arr-indigo)"/>
+  <rect x="370" y="198" width="50" height="20" fill="#FFFFFF" rx="3"/>
+  <text x="395" y="212" class="edge-lbl">sel[8:0]</text>
+  <path d="M 535 765 L 535 833 L 370 833" stroke="#8B5CF6" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="420" y="823" width="85" height="20" fill="#FFFFFF" rx="3"/>
+  <text x="462" y="837" class="edge-lbl">register data</text>
+  <path d="M 230 830 L 170 830" stroke="#8B5CF6" stroke-width="1.5" marker-end="url(#arr-purple)"/>
+  <rect x="760" y="150" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="176" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP0</text>
+  <text x="832" y="197" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[0]</text>
+  <path d="M 650 181 L 700 181 L 700 181 L 760 181" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 825 120 L 825 150" stroke="#059669" stroke-width="1.5" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,141 1075,159 1075,203 1015,221" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="166" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="206" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="185" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="205" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 201 L 1015 201" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 181 L 955 181 L 955 161 L 1015 161" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="158" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="186" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[0]</text>
+  <path d="M 1075 181 L 1170 181" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 940 741 L 940 235 L 1045 235 L 1045 221" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="228" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="239" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[0]</text>
+  <rect x="760" y="255" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="281" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP1</text>
+  <text x="832" y="302" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[1]</text>
+  <path d="M 650 251 L 700 251 L 700 286 L 760 286" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 720 85 L 700 85 L 700 270 L 760 270" stroke="#059669" stroke-width="1.3" fill="none" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,246 1075,264 1075,308 1015,326" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="271" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="311" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="290" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="310" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 306 L 1015 306" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 286 L 955 286 L 955 266 L 1015 266" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="263" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="291" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[1]</text>
+  <path d="M 1075 286 L 1170 286" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 936 741 L 936 340 L 1045 340 L 1045 326" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="333" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="344" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[1]</text>
+  <rect x="760" y="360" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="386" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP2</text>
+  <text x="832" y="407" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[2]</text>
+  <path d="M 650 321 L 700 321 L 700 391 L 760 391" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 720 85 L 700 85 L 700 375 L 760 375" stroke="#059669" stroke-width="1.3" fill="none" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,351 1075,369 1075,413 1015,431" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="376" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="416" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="395" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="415" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 411 L 1015 411" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 391 L 955 391 L 955 371 L 1015 371" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="368" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="396" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[2]</text>
+  <path d="M 1075 391 L 1170 391" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 932 741 L 932 445 L 1045 445 L 1045 431" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="438" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="449" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[2]</text>
+  <rect x="760" y="465" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="491" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP3</text>
+  <text x="832" y="512" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[3]</text>
+  <path d="M 650 391 L 700 391 L 700 496 L 760 496" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 720 85 L 700 85 L 700 480 L 760 480" stroke="#059669" stroke-width="1.3" fill="none" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,456 1075,474 1075,518 1015,536" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="481" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="521" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="500" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="520" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 516 L 1015 516" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 496 L 955 496 L 955 476 L 1015 476" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="473" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="501" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[3]</text>
+  <path d="M 1075 496 L 1170 496" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 928 741 L 928 550 L 1045 550 L 1045 536" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="543" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="554" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[3]</text>
+  <rect x="760" y="570" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="596" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP4</text>
+  <text x="832" y="617" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[4]</text>
+  <path d="M 650 461 L 700 461 L 700 601 L 760 601" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 720 85 L 700 85 L 700 585 L 760 585" stroke="#059669" stroke-width="1.3" fill="none" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,561 1075,579 1075,623 1015,641" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="586" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="626" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="605" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="625" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 621 L 1015 621" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 601 L 955 601 L 955 581 L 1015 581" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="578" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="606" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[4]</text>
+  <path d="M 1075 601 L 1170 601" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 924 741 L 924 655 L 1045 655 L 1045 641" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="648" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="659" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[4]</text>
+  <rect x="760" y="675" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="701" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP5</text>
+  <text x="832" y="722" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[5]</text>
+  <path d="M 650 531 L 700 531 L 700 706 L 760 706" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 720 85 L 700 85 L 700 690 L 760 690" stroke="#059669" stroke-width="1.3" fill="none" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,666 1075,684 1075,728 1015,746" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="691" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="731" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="710" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="730" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 726 L 1015 726" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 706 L 955 706 L 955 686 L 1015 686" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="683" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="711" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[5]</text>
+  <path d="M 1075 706 L 1170 706" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 920 741 L 920 760 L 1045 760 L 1045 746" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="753" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="764" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[5]</text>
+  <rect x="760" y="780" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="806" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP6</text>
+  <text x="832" y="827" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[6]</text>
+  <path d="M 650 601 L 700 601 L 700 811 L 760 811" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 720 85 L 700 85 L 700 795 L 760 795" stroke="#059669" stroke-width="1.3" fill="none" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,771 1075,789 1075,833 1015,851" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="796" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="836" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="815" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="835" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 831 L 1015 831" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 811 L 955 811 L 955 791 L 1015 791" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="788" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="816" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[6]</text>
+  <path d="M 1075 811 L 1170 811" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 916 741 L 916 865 L 1045 865 L 1045 851" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="858" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="869" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[6]</text>
+  <rect x="760" y="885" width="145" height="62" rx="5" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
+  <text x="832" y="911" font-size="13" font-weight="700" fill="#1E293B" text-anchor="middle">CMP7</text>
+  <text x="832" y="932" font-size="11.5" font-weight="600" fill="#059669" text-anchor="middle">cnt &lt; duty[7]</text>
+  <path d="M 650 671 L 700 671 L 700 916 L 760 916" stroke="#64748B" stroke-width="1.3" fill="none" marker-end="url(#arr-slate)"/>
+  <path d="M 720 85 L 700 85 L 700 900 L 760 900" stroke="#059669" stroke-width="1.3" fill="none" marker-end="url(#arr-emerald)"/>
+  <polygon points="1015,876 1075,894 1075,938 1015,956" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1027" y="901" font-size="10" font-weight="700" fill="#92400E">1</text>
+  <text x="1027" y="941" font-size="10" font-weight="700" fill="#92400E">0</text>
+  <text x="1047" y="920" font-size="10.5" font-weight="700" fill="#B45309" text-anchor="middle">MUX</text>
+  <text x="988" y="940" font-size="11" font-weight="700" fill="#B45309" text-anchor="middle">0</text>
+  <path d="M 998 936 L 1015 936" stroke="#D97706" stroke-width="1.3" fill="none" marker-end="url(#arr-amber)"/>
+  <path d="M 905 916 L 955 916 L 955 896 L 1015 896" stroke="#10B981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1170" y="893" width="125" height="45" rx="5" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="1232" y="921" font-size="13" font-weight="700" fill="#065F46" text-anchor="middle">pwm_out[7]</text>
+  <path d="M 1075 916 L 1170 916" stroke="#047857" stroke-width="1.8" fill="none" marker-end="url(#arr-darkgreen)"/>
+  <path d="M 650 741 L 912 741 L 912 970 L 1045 970 L 1045 956" stroke="#D97706" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+  <rect x="995" y="963" width="38" height="15" fill="#FFFFFF" rx="2"/>
+  <text x="1014" y="974" font-size="9.5" font-weight="700" fill="#92400E" text-anchor="middle">en[7]</text>
+  <text x="1045" y="1035" font-size="13" font-weight="600" fill="#334155" text-anchor="middle">Output MUXes: In 1 = raw PWM (from CMP), In 0 = 0 (disabled), Sel = en[i]</text>
+</svg>

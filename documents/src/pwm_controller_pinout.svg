@@ -54,14 +54,14 @@
           &lt;mxGeometry x=&quot;65&quot; y=&quot;232&quot; width=&quot;245&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
         &lt;/mxCell&gt;
 
-        &lt;!-- wrdata[31:0] --&gt;
+        &lt;!-- wrdata[7:0] --&gt;
         &lt;mxCell id=&quot;wire_wrdata&quot; value=&quot;&quot; style=&quot;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
           &lt;mxGeometry width=&quot;50&quot; height=&quot;50&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
             &lt;mxPoint x=&quot;60&quot; y=&quot;310&quot; as=&quot;sourcePoint&quot; /&gt;
             &lt;mxPoint x=&quot;320&quot; y=&quot;310&quot; as=&quot;targetPoint&quot; /&gt;
           &lt;/mxGeometry&gt;
         &lt;/mxCell&gt;
-        &lt;mxCell id=&quot;lbl_wrdata&quot; value=&quot;&amp;lt;b&amp;gt;wrdata[31:0]&amp;lt;/b&amp;gt; [32-bit] &amp;lt;i style=&amp;quot;color:#444;&amp;quot;&amp;gt;(Bus Write Data)&amp;lt;/i&amp;gt;&quot; style=&quot;text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+        &lt;mxCell id=&quot;lbl_wrdata&quot; value=&quot;&amp;lt;b&amp;gt;wrdata[7:0]&amp;lt;/b&amp;gt; [8-bit] &amp;lt;i style=&amp;quot;color:#444;&amp;quot;&amp;gt;(Bus Write Data)&amp;lt;/i&amp;gt;&quot; style=&quot;text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
           &lt;mxGeometry x=&quot;65&quot; y=&quot;287&quot; width=&quot;245&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
         &lt;/mxCell&gt;
 
@@ -76,26 +76,15 @@
           &lt;mxGeometry x=&quot;65&quot; y=&quot;342&quot; width=&quot;245&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
         &lt;/mxCell&gt;
 
-        &lt;!-- ren --&gt;
-        &lt;mxCell id=&quot;wire_ren&quot; value=&quot;&quot; style=&quot;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
-          &lt;mxGeometry width=&quot;50&quot; height=&quot;50&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
-            &lt;mxPoint x=&quot;60&quot; y=&quot;420&quot; as=&quot;sourcePoint&quot; /&gt;
-            &lt;mxPoint x=&quot;320&quot; y=&quot;420&quot; as=&quot;targetPoint&quot; /&gt;
-          &lt;/mxGeometry&gt;
-        &lt;/mxCell&gt;
-        &lt;mxCell id=&quot;lbl_ren&quot; value=&quot;&amp;lt;b&amp;gt;ren&amp;lt;/b&amp;gt; [1-bit] &amp;lt;i style=&amp;quot;color:#444;&amp;quot;&amp;gt;(Synchronous Read Enable)&amp;lt;/i&amp;gt;&quot; style=&quot;text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
-          &lt;mxGeometry x=&quot;65&quot; y=&quot;397&quot; width=&quot;245&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
-        &lt;/mxCell&gt;
-
-        &lt;!-- rdata[31:0] (Read Output on Left) --&gt;
+        &lt;!-- rdata[7:0] (Read Output on Left) --&gt;
         &lt;mxCell id=&quot;wire_rdata&quot; value=&quot;&quot; style=&quot;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;&quot; edge=&quot;1&quot; parent=&quot;1&quot;&gt;
           &lt;mxGeometry width=&quot;50&quot; height=&quot;50&quot; relative=&quot;1&quot; as=&quot;geometry&quot;&gt;
-            &lt;mxPoint x=&quot;320&quot; y=&quot;475&quot; as=&quot;sourcePoint&quot; /&gt;
-            &lt;mxPoint x=&quot;60&quot; y=&quot;475&quot; as=&quot;targetPoint&quot; /&gt;
+            &lt;mxPoint x=&quot;320&quot; y=&quot;420&quot; as=&quot;sourcePoint&quot; /&gt;
+            &lt;mxPoint x=&quot;60&quot; y=&quot;420&quot; as=&quot;targetPoint&quot; /&gt;
           &lt;/mxGeometry&gt;
         &lt;/mxCell&gt;
-        &lt;mxCell id=&quot;lbl_rdata&quot; value=&quot;&amp;lt;b&amp;gt;rdata[31:0]&amp;lt;/b&amp;gt; [32-bit] &amp;lt;i style=&amp;quot;color:#444;&amp;quot;&amp;gt;(Synchronous Read Data)&amp;lt;/i&amp;gt;&quot; style=&quot;text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
-          &lt;mxGeometry x=&quot;65&quot; y=&quot;452&quot; width=&quot;245&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
+        &lt;mxCell id=&quot;lbl_rdata&quot; value=&quot;&amp;lt;b&amp;gt;rdata[7:0]&amp;lt;/b&amp;gt; [8-bit] &amp;lt;i style=&amp;quot;color:#444;&amp;quot;&amp;gt;(Bus Read Data)&amp;lt;/i&amp;gt;&quot; style=&quot;text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;&quot; vertex=&quot;1&quot; parent=&quot;1&quot;&gt;
+          &lt;mxGeometry x=&quot;65&quot; y=&quot;397&quot; width=&quot;245&quot; height=&quot;20&quot; as=&quot;geometry&quot; /&gt;
         &lt;/mxCell&gt;
 
         &lt;!-- OUTPUT PINS (RIGHT) --&gt;
@@ -234,21 +223,17 @@
   <text x="65" y="247" class="port-label">addr[3:0] <tspan class="port-desc">[4-bit] (Register Address 0x0..0x8)</tspan></text>
   <line x1="60" y1="255" x2="315" y2="255" class="wire-bus"/>
 
-  <!-- wrdata[31:0] -->
-  <text x="65" y="302" class="port-label">wrdata[31:0] <tspan class="port-desc">[32-bit] (Bus Write Data)</tspan></text>
+  <!-- wrdata[7:0] -->
+  <text x="65" y="302" class="port-label">wrdata[7:0] <tspan class="port-desc">[8-bit] (Bus Write Data)</tspan></text>
   <line x1="60" y1="310" x2="315" y2="310" class="wire-bus"/>
 
   <!-- wen -->
   <text x="65" y="357" class="port-label">wen <tspan class="port-desc">[1-bit] (Synchronous Write Enable)</tspan></text>
   <line x1="60" y1="365" x2="315" y2="365" class="wire"/>
 
-  <!-- ren -->
-  <text x="65" y="412" class="port-label">ren <tspan class="port-desc">[1-bit] (Synchronous Read Enable)</tspan></text>
-  <line x1="60" y1="420" x2="315" y2="420" class="wire"/>
-
-  <!-- rdata[31:0] (Read Data Output on Left) -->
-  <text x="65" y="467" class="port-label">rdata[31:0] <tspan class="port-desc">[32-bit] (Synchronous Read Data)</tspan></text>
-  <line x1="320" y1="475" x2="65" y2="475" class="wire-bus"/>
+  <!-- rdata[7:0] (Read Data Output on Left) -->
+  <text x="65" y="412" class="port-label">rdata[7:0] <tspan class="port-desc">[8-bit] (Continuous Read Data)</tspan></text>
+  <line x1="320" y1="420" x2="65" y2="420" class="wire-bus"/>
 
   <!-- OUTPUT PINS (RIGHT) -->
   <!-- pwm_out[0] -->

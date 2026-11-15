@@ -5,7 +5,6 @@ module pwm_channel #(
 )(
     input  logic                  clk,
     input  logic                  arst_n,
-    input  logic                  global_en,
     input  logic                  ch_en,
     input  logic                  period_tick,
     input  logic [RESOLUTION-1:0] counter,
@@ -15,16 +14,16 @@ module pwm_channel #(
 
     logic [RESOLUTION-1:0] duty_shadow;
 
-    // Shadow register: latches configuration at PWM period boundary or while disabled
+    // Shadow register: latches configuration at PWM period boundary or while channel is disabled
     always_ff @(posedge clk or negedge arst_n) begin
         if (!arst_n) begin
             duty_shadow <= '0;
-        end else if (!global_en || period_tick) begin
+        end else if (!ch_en || period_tick) begin
             duty_shadow <= duty_in;
         end
     end
 
-    // Magnitude comparator and output qualification gating logic
-    assign pwm_out = global_en & ch_en & (counter < duty_shadow);
+    // Magnitude comparator and channel enable gating logic
+    assign pwm_out = ch_en & (counter < duty_shadow);
 
 endmodule

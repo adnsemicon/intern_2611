@@ -54,14 +54,14 @@
           <mxGeometry x="65" y="232" width="245" height="20" as="geometry" />
         </mxCell>
 
-        <!-- wrdata[31:0] -->
+        <!-- wrdata[7:0] -->
         <mxCell id="wire_wrdata" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="60" y="310" as="sourcePoint" />
             <mxPoint x="320" y="310" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="lbl_wrdata" value="&lt;b&gt;wrdata[31:0]&lt;/b&gt; [32-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Bus Write Data)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
+        <mxCell id="lbl_wrdata" value="&lt;b&gt;wrdata[7:0]&lt;/b&gt; [8-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Bus Write Data)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="65" y="287" width="245" height="20" as="geometry" />
         </mxCell>
 
@@ -76,26 +76,15 @@
           <mxGeometry x="65" y="342" width="245" height="20" as="geometry" />
         </mxCell>
 
-        <!-- ren -->
-        <mxCell id="wire_ren" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="60" y="420" as="sourcePoint" />
-            <mxPoint x="320" y="420" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_ren" value="&lt;b&gt;ren&lt;/b&gt; [1-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Synchronous Read Enable)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="397" width="245" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- rdata[31:0] (Read Output on Left) -->
+        <!-- rdata[7:0] (Read Output on Left) -->
         <mxCell id="wire_rdata" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="320" y="475" as="sourcePoint" />
-            <mxPoint x="60" y="475" as="targetPoint" />
+            <mxPoint x="320" y="420" as="sourcePoint" />
+            <mxPoint x="60" y="420" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="lbl_rdata" value="&lt;b&gt;rdata[31:0]&lt;/b&gt; [32-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Synchronous Read Data)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="452" width="245" height="20" as="geometry" />
+        <mxCell id="lbl_rdata" value="&lt;b&gt;rdata[7:0]&lt;/b&gt; [8-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Bus Read Data)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="65" y="397" width="245" height="20" as="geometry" />
         </mxCell>
 
         <!-- OUTPUT PINS (RIGHT) -->
