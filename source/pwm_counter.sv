@@ -4,22 +4,19 @@ module pwm_counter #(
     parameter int RESOLUTION  = 8,
     parameter int COUNTER_MAX = 255
 )(
-    input  logic                  clk,
+    input  logic                  clk_i,
     input  logic                  arst_n,
-    output logic [RESOLUTION-1:0] counter,
-    output logic                  period_tick
+    output logic [RESOLUTION-1:0] cnt
 );
 
-    always_ff @(posedge clk or negedge arst_n) begin
+    always_ff @(posedge clk_i or negedge arst_n) begin
         if (!arst_n) begin
-            counter <= '0;
-        end else if (counter == COUNTER_MAX[RESOLUTION-1:0]) begin
-            counter <= '0;
+            cnt <= '0;
+        end else if (cnt == COUNTER_MAX[RESOLUTION-1:0]) begin
+            cnt <= '0;
         end else begin
-            counter <= counter + 1'b1;
+            cnt <= cnt + 1'b1;
         end
     end
-
-    assign period_tick = (counter == COUNTER_MAX[RESOLUTION-1:0]);
 
 endmodule

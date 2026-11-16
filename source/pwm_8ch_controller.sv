@@ -7,65 +7,52 @@ module pwm_8ch_controller #(
     parameter int RESOLUTION   = 8,
     parameter int COUNTER_MAX  = 255
 )(
-    input  logic                    clk,
+    input  logic                    clk_i,
     input  logic                    arst_n,
     input  logic [ADDR_WIDTH-1:0]   addr,
-    input  logic [DATA_WIDTH-1:0]   wrdata,
-    input  logic                    wen,
+    input  logic [DATA_WIDTH-1:0]   wdata,
+    input  logic                    w_en,
     output logic [DATA_WIDTH-1:0]   rdata,
     output logic [NUM_CHANNELS-1:0] pwm_out
 );
 
-    // Internal inter-module signals
+    // Internal interconnect signals
     logic [NUM_CHANNELS-1:0][RESOLUTION-1:0] duty_reg;
-    logic [NUM_CHANNELS-1:0]                 ch_en;
-    logic [RESOLUTION-1:0]                   counter;
-    logic                                    period_tick;
+    logic [NUM_CHANNELS-1:0]                 en_reg;
+    logic [RESOLUTION-1:0]                   cnt;
 
-    // Submodule 1: Register Bank & Address Decoder
+    // Submodule 1: Register Bank & Address Decoder / MUX
     pwm_registers #(
         .NUM_CHANNELS (NUM_CHANNELS),
         .ADDR_WIDTH   (ADDR_WIDTH),
         .DATA_WIDTH   (DATA_WIDTH),
         .RESOLUTION   (RESOLUTION)
     ) u_registers (
-        .clk       (clk),
-        .arst_n    (arst_n),
-        .addr      (addr),
-        .wrdata    (wrdata),
-        .wen       (wen),
-        .rdata     (rdata),
-        .duty_reg  (duty_reg),
-        .ch_en     (ch_en)
+        .clk_i    (clk_i),
+        .arst_n   (arst_n),
+        .addr     (addr),
+        .wdata    (wdata),
+        .w_en     (w_en),
+        .rdata    (rdata),
+        .duty_reg (duty_reg),
+        .en_reg   (en_reg)
     );
 
-    // Submodule 2: Shared Timing Reference Generator
+    // Submodule 2: Shared 8-Bit Free-Running Timing Reference Counter
     pwm_counter #(
         .RESOLUTION  (RESOLUTION),
         .COUNTER_MAX (COUNTER_MAX)
     ) u_counter (
-        .clk         (clk),
-        .arst_n      (arst_n),
-        .counter     (counter),
-        .period_tick (period_tick)
+        .clk_i   (clk_i),
+        .arst_n  (arst_n),
+        .cnt     (cnt)
     );
 
-    // Submodule 3: 8 Parallel Glitch-Free Channel Engines
-    genvar i;
-    generate
-        for (i = 0; i < NUM_CHANNELS; i++) begin : gen_channel
-            pwm_channel #(
-                .RESOLUTION (RESOLUTION)
-            ) u_channel (
-                .clk         (clk),
-                .arst_n      (arst_n),
-                .ch_en       (ch_en[i]),
-                .period_tick (period_tick),
-                .counter     (counter),
-                .duty_in     (duty_reg[i]),
-                .pwm_out     (pwm_out[i])
-            );
+    // 8 Parallel Magnitude Comparators & Output Enable AND Gates
+    always_comb begin
+        for (int i = 0; i < NUM_CHANNELS; i++) begin
+            pwm_out[i] = en_reg[i] & (cnt < duty_reg[i]);
         end
-    endgenerate
+    end
 
 endmodule

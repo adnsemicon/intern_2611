@@ -13,7 +13,10 @@ FILES += $(shell [ -d $(CURDIR)/testbench ] && find $(CURDIR)/testbench -maxdept
 
 .DEFAULT_GOAL = help
 
-.PHONY: simulate
+.PHONY: all run simulate clean help
+
+all: simulate
+
 simulate:
 	@make -s clean
 	@mkdir -p build
@@ -22,15 +25,17 @@ simulate:
 	@cd build && $(XELAB) $(TOP) -s snap_$(TOP) -debug all
 	@cd build && $(XSIM) snap_$(TOP) -R
 
-.PHONY: clean
+run:
+	@cd build && $(XSIM) snap_$(TOP) -R
+
 clean:
 	@rm -rf build
 
-.PHONY: help
 help:
 	@echo ""
 	@echo "8-Channel PWM Controller Simulation Makefile (Xilinx Vivado Simulator)"
-	@echo -e "\033[1;34m  make simulate\033[0m \033[1;35mTOP=\033[0m\033[1;31m<TOP_MODULE_NAME>\033[0m\033[39G\033[1;32m# Simulate top module (default: tb_pwm_8ch_controller)\033[0m"
+	@echo -e "\033[1;34m  make all\033[0m      \033[1;35mTOP=\033[0m\033[1;31m<TOP_MODULE_NAME>\033[0m\033[39G\033[1;32m# Build and run complete simulation\033[0m"
+	@echo -e "\033[1;34m  make run\033[0m      \033[1;35mTOP=\033[0m\033[1;31m<TOP_MODULE_NAME>\033[0m\033[39G\033[1;32m# Fast re-run of existing simulation snapshot\033[0m"
 	@echo -e "\033[1;34m  make clean\033[0m\033[39G\033[1;32m# Remove all temporary simulation files\033[0m"
 	@echo "Please read README.md and documents/ folder for further details."
 	@echo ""
