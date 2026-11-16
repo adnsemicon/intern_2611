@@ -15,9 +15,11 @@ typedef struct packed {
   
   bus_pkt_t pkt;
   state_t current_state;
+  logic [15:0] a;
   
   initial begin
           current_state = WRITE;
+          a = {8'b10101010,8'b01111111};
           pkt ='{addr: 8'hA5, data: 32'hdeadbeef, wr_en:1'b1};
           $display("User defined Types Test");
           // Test 
