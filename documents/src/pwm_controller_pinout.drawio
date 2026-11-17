@@ -1,182 +1,145 @@
-<mxfile host="app.diagrams.net" modified="2026-11-15T15:00:00.000Z" agent="Antigravity" version="21.0.0" type="device">
-  <diagram id="pinout_diagram" name="Pinout">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="600" background="#FFFFFF" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-
-        <!-- Background Box -->
-        <mxCell id="bg_box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="20" y="20" width="940" height="540" as="geometry" />
-        </mxCell>
-
-        <!-- Diagram Header Box -->
-        <mxCell id="header_box" value="&lt;b&gt;8-CHANNEL PWM CONTROLLER — TOP-LEVEL PINOUT&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontSize=14;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="270" y="35" width="440" height="30" as="geometry" />
-        </mxCell>
-
-        <!-- Central Module Box -->
-        <mxCell id="dut_core" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;pwm_8ch_controller&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;i&gt;DUT Top-Level Interface&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=3;align=center;verticalAlign=top;spacingTop=15;fontColor=#000000;" vertex="1" parent="1">
-          <mxGeometry x="320" y="85" width="340" height="445" as="geometry" />
-        </mxCell>
-
-        <!-- INPUT PINS (LEFT) -->
-        <!-- clk -->
-        <mxCell id="wire_clk" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="60" y="145" as="sourcePoint" />
-            <mxPoint x="320" y="145" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_clk" value="&lt;b&gt;clk&lt;/b&gt; [1-bit] &lt;i style=&quot;color:#444;&quot;&gt;(System Clock)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="122" width="230" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- arst_n -->
-        <mxCell id="wire_arst_n" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="60" y="200" as="sourcePoint" />
-            <mxPoint x="320" y="200" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_arst_n" value="&lt;b&gt;arst_n&lt;/b&gt; [1-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Active-Low Asynch Reset)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="177" width="245" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- addr[3:0] -->
-        <mxCell id="wire_addr" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="60" y="255" as="sourcePoint" />
-            <mxPoint x="320" y="255" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_addr" value="&lt;b&gt;addr[3:0]&lt;/b&gt; [4-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Register Address 0x0..0x8)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="232" width="245" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- wrdata[7:0] -->
-        <mxCell id="wire_wrdata" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="60" y="310" as="sourcePoint" />
-            <mxPoint x="320" y="310" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_wrdata" value="&lt;b&gt;wrdata[7:0]&lt;/b&gt; [8-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Bus Write Data)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="287" width="245" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- wen -->
-        <mxCell id="wire_wen" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="60" y="365" as="sourcePoint" />
-            <mxPoint x="320" y="365" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_wen" value="&lt;b&gt;wen&lt;/b&gt; [1-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Synchronous Write Enable)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="342" width="245" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- rdata[7:0] (Read Output on Left) -->
-        <mxCell id="wire_rdata" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="320" y="420" as="sourcePoint" />
-            <mxPoint x="60" y="420" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_rdata" value="&lt;b&gt;rdata[7:0]&lt;/b&gt; [8-bit] &lt;i style=&quot;color:#444;&quot;&gt;(Bus Read Data)&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="65" y="397" width="245" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- OUTPUT PINS (RIGHT) -->
-        <!-- pwm_out[0] -->
-        <mxCell id="wire_pwm0" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="140" as="sourcePoint" />
-            <mxPoint x="910" y="140" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm0" value="&lt;b&gt;pwm_out[0]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 0 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="118" width="220" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- pwm_out[1] -->
-        <mxCell id="wire_pwm1" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="185" as="sourcePoint" />
-            <mxPoint x="910" y="185" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm1" value="&lt;b&gt;pwm_out[1]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 1 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="163" width="220" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- pwm_out[2] -->
-        <mxCell id="wire_pwm2" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="230" as="sourcePoint" />
-            <mxPoint x="910" y="230" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm2" value="&lt;b&gt;pwm_out[2]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 2 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="208" width="220" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- pwm_out[3] -->
-        <mxCell id="wire_pwm3" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="275" as="sourcePoint" />
-            <mxPoint x="910" y="275" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm3" value="&lt;b&gt;pwm_out[3]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 3 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="253" width="220" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- pwm_out[4] -->
-        <mxCell id="wire_pwm4" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="320" as="sourcePoint" />
-            <mxPoint x="910" y="320" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm4" value="&lt;b&gt;pwm_out[4]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 4 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="298" width="220" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- pwm_out[5] -->
-        <mxCell id="wire_pwm5" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="365" as="sourcePoint" />
-            <mxPoint x="910" y="365" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm5" value="&lt;b&gt;pwm_out[5]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 5 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="343" width="220" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- pwm_out[6] -->
-        <mxCell id="wire_pwm6" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="410" as="sourcePoint" />
-            <mxPoint x="910" y="410" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm6" value="&lt;b&gt;pwm_out[6]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 6 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="388" width="220" height="20" as="geometry" />
-        </mxCell>
-
-        <!-- pwm_out[7] -->
-        <mxCell id="wire_pwm7" value="" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="660" y="455" as="sourcePoint" />
-            <mxPoint x="910" y="455" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lbl_pwm7" value="&lt;b&gt;pwm_out[7]&lt;/b&gt; &lt;font style=&quot;color:#444;&quot;&gt;(Channel 7 Output)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="670" y="433" width="220" height="20" as="geometry" />
-        </mxCell>
-
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram id="pinout_diagram" name="Pinout">
+        <mxGraphModel dx="928" dy="663" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="600" background="#FFFFFF" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="bg_box" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;strokeWidth=2;" value="" vertex="1">
+                    <mxGeometry height="600" width="980" as="geometry"/>
+                </mxCell>
+                <mxCell id="header_box" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=2;fontSize=14;fontColor=#000000;" value="&lt;b&gt;8-CHANNEL PWM CONTROLLER — TOP-LEVEL PINOUT&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="30" width="440" x="270" y="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="dut_core" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=3;align=center;verticalAlign=top;spacingTop=15;fontColor=#000000;" value="&lt;h1&gt;&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/h1&gt;&lt;h1&gt;&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/h1&gt;&lt;h1&gt;&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot; face=&quot;Times New Roman&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/h1&gt;&lt;h1&gt;&lt;b style=&quot;color: rgb(63, 63, 63); background-color: transparent; font-size: 12px;&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot; face=&quot;Times New Roman&quot;&gt;pwm_8ch_controller&lt;/font&gt;&lt;/b&gt;&lt;/h1&gt;&lt;i&gt;&lt;font face=&quot;Times New Roman&quot;&gt;DUT Top-Level Interface&lt;/font&gt;&lt;/i&gt;" vertex="1">
+                    <mxGeometry height="445" width="340" x="320" y="85" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_clk" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="60" y="145" as="sourcePoint"/>
+                        <mxPoint x="320" y="145" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_clk" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=16;fontFamily=Times New Roman;" value="&lt;b&gt;clk_i&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="230" x="65" y="122" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_arst_n" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="60" y="200" as="sourcePoint"/>
+                        <mxPoint x="320" y="200" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_arst_n" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=16;fontFamily=Times New Roman;" value="&lt;b&gt;arst_ni&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="245" x="65" y="177" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_addr" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="60" y="255" as="sourcePoint"/>
+                        <mxPoint x="320" y="255" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_addr" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=16;fontFamily=Times New Roman;" value="&lt;b&gt;addr_i&amp;nbsp;&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="245" x="65" y="232" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_wrdata" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="60" y="310" as="sourcePoint"/>
+                        <mxPoint x="320" y="310" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_wrdata" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=16;fontFamily=Times New Roman;" value="&lt;b&gt;wrdata_i&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="245" x="65" y="287" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_wen" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="60" y="365" as="sourcePoint"/>
+                        <mxPoint x="320" y="365" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_wen" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=16;fontFamily=Times New Roman;" value="&lt;b&gt;wen _i&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="245" x="65" y="342" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_rdata" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=3;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="320" y="420" as="sourcePoint"/>
+                        <mxPoint x="60" y="420" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_rdata" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=16;fontFamily=Times New Roman;" value="&lt;b&gt;rdata_o&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="245" x="65" y="397" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm0" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="140" as="sourcePoint"/>
+                        <mxPoint x="910" y="140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm0" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[0]&lt;/b&gt;&amp;nbsp;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="118" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm1" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="185" as="sourcePoint"/>
+                        <mxPoint x="910" y="185" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm1" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[1]&lt;/b&gt;&amp;nbsp;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="163" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm2" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="230" as="sourcePoint"/>
+                        <mxPoint x="910" y="230" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm2" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[2]&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="208" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm3" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="275" as="sourcePoint"/>
+                        <mxPoint x="910" y="275" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm3" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[3]&lt;/b&gt;&amp;nbsp;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="253" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm4" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="320" as="sourcePoint"/>
+                        <mxPoint x="910" y="320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm4" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[4]&lt;/b&gt;&amp;nbsp;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="298" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm5" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="365" as="sourcePoint"/>
+                        <mxPoint x="910" y="365" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm5" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[5]&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="343" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm6" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="410" as="sourcePoint"/>
+                        <mxPoint x="910" y="410" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm6" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[6]&lt;/b&gt;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="388" as="geometry"/>
+                </mxCell>
+                <mxCell id="wire_pwm7" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#000000;strokeWidth=2.5;endFill=1;" value="">
+                    <mxGeometry height="50" relative="1" width="50" as="geometry">
+                        <mxPoint x="660" y="455" as="sourcePoint"/>
+                        <mxPoint x="910" y="455" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="lbl_pwm7" parent="1" style="text;html=1;align=left;verticalAlign=bottom;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=13;fontFamily=Times New Roman;" value="&lt;b&gt;pwm_o[7]&lt;/b&gt;&amp;nbsp;" vertex="1">
+                    <mxGeometry height="20" width="220" x="670" y="433" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>
