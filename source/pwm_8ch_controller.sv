@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module pwm_8ch_controller #(
     parameter int NUM_CHANNELS = 8,
     parameter int ADDR_WIDTH   = 4,
