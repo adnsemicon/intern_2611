@@ -85,7 +85,7 @@ The pin table describes all top-level input and output signals.
 ## Microarchitecture
 *****************
 
-![PWM Controller](pwm_microarchitecture.svg)
+![PWM Controller](Pwm_microarchitecture.svg)
 
 The architecture consists of the following major blocks:
 
