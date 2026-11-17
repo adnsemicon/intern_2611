@@ -2,8 +2,7 @@ module pwm_top #(
     parameter int NUM_CHANNELS = 8,
     parameter int ADDR_WIDTH   = 4,
     parameter int DATA_WIDTH   = 8,
-    parameter int RESOLUTION   = 8,
-    parameter int COUNTER_MAX  = 255
+    parameter int RESOLUTION   = 8
 )(
     input  logic                    clk_i,
     input  logic                    arst_ni,
@@ -14,9 +13,9 @@ module pwm_top #(
     output logic [NUM_CHANNELS-1:0] pwm_o
 );
 
-   
+    // =====================================================
     // Internal Signal Declarations
-    // ===================================
+    // =====================================================
 
     // Duty cycle registers for all PWM channels
     logic [NUM_CHANNELS-1:0][RESOLUTION-1:0] duty_reg;
@@ -25,9 +24,9 @@ module pwm_top #(
     logic [NUM_CHANNELS-1:0] en_reg;
 
 
-
+    // =====================================================
     // Module 1: Register Bank
-    
+    // =====================================================
 
     pwm_registers #(
         .NUM_CHANNELS (NUM_CHANNELS),
@@ -46,14 +45,13 @@ module pwm_top #(
     );
 
 
-    
+    // =====================================================
     // Module 2: PWM Generator (Counter + Comparators)
-   
+    // =====================================================
 
     pwm_generator #(
         .NUM_CHANNELS (NUM_CHANNELS),
-        .RESOLUTION   (RESOLUTION),
-        .COUNTER_MAX  (COUNTER_MAX)
+        .RESOLUTION   (RESOLUTION)
     ) u_generator (
         .clk_i     (clk_i),
         .arst_ni   (arst_ni),
