@@ -1,5 +1,3 @@
-`timescale 1ns / 1ps
-
 module pwm_generator #(
     parameter int NUM_CHANNELS = 8,
     parameter int RESOLUTION   = 8,
