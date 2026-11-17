@@ -8,20 +8,19 @@ module pwm_8ch_controller #(
     parameter int COUNTER_MAX  = 255
 )(
     input  logic                    clk_i,
-    input  logic                    arst_n,
-    input  logic [ADDR_WIDTH-1:0]   addr,
-    input  logic [DATA_WIDTH-1:0]   wdata,
-    input  logic                    w_en,
-    output logic [DATA_WIDTH-1:0]   rdata,
-    output logic [NUM_CHANNELS-1:0] pwm_out
+    input  logic                    arst_ni,
+    input  logic [ADDR_WIDTH-1:0]   addr_i,
+    input  logic [DATA_WIDTH-1:0]   wdata_i,
+    input  logic                    wen_i,
+    output logic [DATA_WIDTH-1:0]   rdata_o,
+    output logic [NUM_CHANNELS-1:0] pwm_o
 );
 
     // Internal interconnect signals
     logic [NUM_CHANNELS-1:0][RESOLUTION-1:0] duty_reg;
     logic [NUM_CHANNELS-1:0]                 en_reg;
-    logic [RESOLUTION-1:0]                   cnt;
 
-    // Submodule 1: Register Bank & Address Decoder / MUX
+    // Submodule 1: Register Bank & Bus Interface
     pwm_registers #(
         .NUM_CHANNELS (NUM_CHANNELS),
         .ADDR_WIDTH   (ADDR_WIDTH),
@@ -29,30 +28,26 @@ module pwm_8ch_controller #(
         .RESOLUTION   (RESOLUTION)
     ) u_registers (
         .clk_i    (clk_i),
-        .arst_n   (arst_n),
-        .addr     (addr),
-        .wdata    (wdata),
-        .w_en     (w_en),
-        .rdata    (rdata),
+        .arst_ni  (arst_ni),
+        .addr_i   (addr_i),
+        .wdata_i  (wdata_i),
+        .wen_i    (wen_i),
+        .rdata_o  (rdata_o),
         .duty_reg (duty_reg),
         .en_reg   (en_reg)
     );
 
-    // Submodule 2: Shared 8-Bit Free-Running Timing Reference Counter
-    pwm_counter #(
-        .RESOLUTION  (RESOLUTION),
-        .COUNTER_MAX (COUNTER_MAX)
-    ) u_counter (
-        .clk_i   (clk_i),
-        .arst_n  (arst_n),
-        .cnt     (cnt)
+    // Submodule 2: PWM Datapath Generator (Counter + Comparators + Gating)
+    pwm_generator #(
+        .NUM_CHANNELS (NUM_CHANNELS),
+        .RESOLUTION   (RESOLUTION),
+        .COUNTER_MAX  (COUNTER_MAX)
+    ) u_generator (
+        .clk_i    (clk_i),
+        .arst_ni  (arst_ni),
+        .duty_reg (duty_reg),
+        .en_reg   (en_reg),
+        .pwm_o    (pwm_o)
     );
-
-    // 8 Parallel Magnitude Comparators & Output Enable AND Gates
-    always_comb begin
-        for (int i = 0; i < NUM_CHANNELS; i++) begin
-            pwm_out[i] = en_reg[i] & (cnt < duty_reg[i]);
-        end
-    end
 
 endmodule

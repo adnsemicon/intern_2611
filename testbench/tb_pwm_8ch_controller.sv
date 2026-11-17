@@ -12,7 +12,7 @@ module tb_pwm_8ch_controller;
 
     // Clock and Reset signals
     logic clk_i = 0;
-    logic arst_n = 0;
+    logic arst_ni = 0;
 
     // Clock generation
     always #(CLK_PERIOD / 2) clk_i = ~clk_i;
@@ -23,8 +23,8 @@ module tb_pwm_8ch_controller;
         .ADDR_WIDTH   (ADDR_WIDTH),
         .DATA_WIDTH   (DATA_WIDTH)
     ) vif (
-        .clk_i  (clk_i),
-        .arst_n (arst_n)
+        .clk_i   (clk_i),
+        .arst_ni (arst_ni)
     );
 
     // DUT instantiation
@@ -36,12 +36,12 @@ module tb_pwm_8ch_controller;
         .COUNTER_MAX  (COUNTER_MAX)
     ) dut (
         .clk_i   (vif.clk_i),
-        .arst_n  (vif.arst_n),
-        .addr    (vif.addr),
-        .wdata   (vif.wdata),
-        .w_en    (vif.w_en),
-        .rdata   (vif.rdata),
-        .pwm_out (vif.pwm_out)
+        .arst_ni (vif.arst_ni),
+        .addr_i  (vif.addr_i),
+        .wdata_i (vif.wdata_i),
+        .wen_i   (vif.wen_i),
+        .rdata_o (vif.rdata_o),
+        .pwm_o   (vif.pwm_o)
     );
 
     // Test stimulus duties
@@ -86,27 +86,27 @@ module tb_pwm_8ch_controller;
         $display("========================================================\n");
 
         // Initialize signals
-        vif.addr  <= '0;
-        vif.wdata <= '0;
-        vif.w_en  <= 1'b0;
-        arst_n    <= 1'b0;
+        vif.addr_i  <= '0;
+        vif.wdata_i <= '0;
+        vif.wen_i   <= 1'b0;
+        arst_ni     <= 1'b0;
 
         // ----------------------------------------------------
         // TEST 1: Asynchronous Reset Check
         // ----------------------------------------------------
         $display("--- TEST 1: Reset Check ---");
         #(CLK_PERIOD * 3);
-        if (vif.pwm_out !== '0) begin
+        if (vif.pwm_o !== '0) begin
             $display("[FAIL] Outputs not zero during reset!");
             err_count++;
         end else begin
-            $display("[PASS] Reset successfully clears pwm_out.");
+            $display("[PASS] Reset successfully clears pwm_o.");
         end
 
         // Deassert reset
         @(posedge clk_i);
         #(CLK_PERIOD / 4);
-        arst_n <= 1'b1;
+        arst_ni <= 1'b1;
         @(posedge clk_i);
 
         // ----------------------------------------------------
@@ -138,11 +138,11 @@ module tb_pwm_8ch_controller;
         $display("\n--- TEST 3: Output Gating (CH_EN = 8'h00) ---");
         vif.write_reg(4'h8, 8'h00); // Disable all channels
         repeat (100) @(posedge clk_i);
-        if (vif.pwm_out !== '0) begin
-            $display("[FAIL] pwm_out non-zero while all channels disabled: 0x%02h", vif.pwm_out);
+        if (vif.pwm_o !== '0) begin
+            $display("[FAIL] pwm_o non-zero while all channels disabled: 0x%02h", vif.pwm_o);
             err_count++;
         end else begin
-            $display("[PASS] All pwm_out lines held at 0 when CH_EN=8'h00.");
+            $display("[PASS] All pwm_o lines held at 0 when CH_EN=8'h00.");
         end
 
         // ----------------------------------------------------
@@ -152,9 +152,9 @@ module tb_pwm_8ch_controller;
         // Enable only CH1 (bit 1) and CH4 (bit 4) -> 8'b0001_0010 = 8'h12
         vif.write_reg(4'h8, 8'h12);
         repeat (50) @(posedge clk_i);
-        if (vif.pwm_out[0] !== 1'b0 || vif.pwm_out[2] !== 1'b0 || vif.pwm_out[3] !== 1'b0 ||
-            vif.pwm_out[5] !== 1'b0 || vif.pwm_out[6] !== 1'b0 || vif.pwm_out[7] !== 1'b0) begin
-            $display("[FAIL] Disabled channels emitted pulses: 0x%02h", vif.pwm_out);
+        if (vif.pwm_o[0] !== 1'b0 || vif.pwm_o[2] !== 1'b0 || vif.pwm_o[3] !== 1'b0 ||
+            vif.pwm_o[5] !== 1'b0 || vif.pwm_o[6] !== 1'b0 || vif.pwm_o[7] !== 1'b0) begin
+            $display("[FAIL] Disabled channels emitted pulses: 0x%02h", vif.pwm_o);
             err_count++;
         end else begin
             $display("[PASS] Disabled channels remain 0 while selected channels operate.");
@@ -168,7 +168,7 @@ module tb_pwm_8ch_controller;
         vif.write_reg(4'h8, 8'hFF);
 
         // Synchronize to the start of a new PWM period (cnt == 0)
-        do @(posedge clk_i); while (dut.cnt != '0);
+        do @(posedge clk_i); while (dut.u_generator.cnt != '0);
 
         // Sample for exactly one full period (256 clock cycles)
         for (int ch = 0; ch < NUM_CHANNELS; ch++) high_counts[ch] = 0;
@@ -176,7 +176,7 @@ module tb_pwm_8ch_controller;
         for (int cycle = 0; cycle < 256; cycle++) begin
             @(posedge clk_i);
             for (int ch = 0; ch < NUM_CHANNELS; ch++) begin
-                if (vif.pwm_out[ch] === 1'b1) high_counts[ch]++;
+                if (vif.pwm_o[ch] === 1'b1) high_counts[ch]++;
             end
         end
 
@@ -197,30 +197,30 @@ module tb_pwm_8ch_controller;
         // ----------------------------------------------------
         $display("\n--- TEST 6: Immediate Dynamic Duty Update ---");
         // Synchronize to start of period
-        do @(posedge clk_i); while (dut.cnt != '0);
+        do @(posedge clk_i); while (dut.u_generator.cnt != '0);
         // Advance to mid-period cnt ~ 50
         repeat (50) @(posedge clk_i);
 
         // At cnt ~ 50:
-        // CH4 currently has duty = 128 (cnt < 128 -> pwm_out[4] is 1)
+        // CH4 currently has duty = 128 (cnt < 128 -> pwm_o[4] is 1)
         // Dynamically update CH4 duty to 32 (immediate update)
         vif.write_reg(4'h4, 8'd32);
 
-        // Since cnt > 32, pwm_out[4] must immediately transition to 0 without waiting for next period
+        // Since cnt > 32, pwm_o[4] must immediately transition to 0 without waiting for next period
         @(posedge clk_i);
-        if (vif.pwm_out[4] !== 1'b0) begin
-            $display("[FAIL] CH4 did not update immediately to 0 when duty was lowered below current count! Got %0b", vif.pwm_out[4]);
+        if (vif.pwm_o[4] !== 1'b0) begin
+            $display("[FAIL] CH4 did not update immediately to 0 when duty was lowered below current count! Got %0b", vif.pwm_o[4]);
             err_count++;
         end else begin
             $display("[PASS] CH4 immediate update verified: output dropped to 0 as soon as duty was updated below count.");
         end
 
         // Verify next full period reflects the updated duty (32)
-        do @(posedge clk_i); while (dut.cnt != '0);
+        do @(posedge clk_i); while (dut.u_generator.cnt != '0);
         high_counts[4] = 0;
         for (int cycle = 0; cycle < 256; cycle++) begin
             @(posedge clk_i);
-            if (vif.pwm_out[4] === 1'b1) high_counts[4]++;
+            if (vif.pwm_o[4] === 1'b1) high_counts[4]++;
         end
 
         if (high_counts[4] !== 32) begin

@@ -6,45 +6,45 @@ interface pwm_if #(
     parameter int DATA_WIDTH   = 8
 )(
     input logic clk_i,
-    input logic arst_n
+    input logic arst_ni
 );
-    logic [ADDR_WIDTH-1:0]   addr;
-    logic [DATA_WIDTH-1:0]   wdata;
-    logic                    w_en;
-    logic [DATA_WIDTH-1:0]   rdata;
-    logic [NUM_CHANNELS-1:0] pwm_out;
+    logic [ADDR_WIDTH-1:0]   addr_i;
+    logic [DATA_WIDTH-1:0]   wdata_i;
+    logic                    wen_i;
+    logic [DATA_WIDTH-1:0]   rdata_o;
+    logic [NUM_CHANNELS-1:0] pwm_o;
 
     // DUT Modport
     modport dut (
-        input  clk_i, arst_n, addr, wdata, w_en,
-        output rdata, pwm_out
+        input  clk_i, arst_ni, addr_i, wdata_i, wen_i,
+        output rdata_o, pwm_o
     );
 
     // Synchronous bus idle task
     task automatic idle();
         @(posedge clk_i);
-        addr  <= '0;
-        wdata <= '0;
-        w_en  <= 1'b0;
+        addr_i  <= '0;
+        wdata_i <= '0;
+        wen_i   <= 1'b0;
     endtask
 
     // Synchronous write task
     task automatic write_reg(input logic [ADDR_WIDTH-1:0] a, input logic [DATA_WIDTH-1:0] d);
         @(posedge clk_i);
-        addr  <= a;
-        wdata <= d;
-        w_en  <= 1'b1;
+        addr_i  <= a;
+        wdata_i <= d;
+        wen_i   <= 1'b1;
         @(posedge clk_i);
-        w_en  <= 1'b0;
+        wen_i   <= 1'b0;
     endtask
 
     // Synchronous read task
     task automatic read_reg(input logic [ADDR_WIDTH-1:0] a, output logic [DATA_WIDTH-1:0] d);
         @(posedge clk_i);
-        addr <= a;
-        w_en <= 1'b0;
+        addr_i <= a;
+        wen_i  <= 1'b0;
         @(posedge clk_i);
-        d = rdata;
+        d = rdata_o;
     endtask
 
 endinterface
