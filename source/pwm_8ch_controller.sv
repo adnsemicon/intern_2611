@@ -4,8 +4,7 @@ module pwm_8ch_controller #(
     parameter int NUM_CHANNELS = 8,
     parameter int ADDR_WIDTH   = 4,
     parameter int DATA_WIDTH   = 8,
-    parameter int RESOLUTION   = 8,
-    parameter int COUNTER_MAX  = 255
+    parameter int RESOLUTION   = 8
 )(
     input  logic                    clk_i,
     input  logic                    arst_ni,
@@ -40,8 +39,7 @@ module pwm_8ch_controller #(
     // Submodule 2: PWM Datapath Generator (Counter + Comparators + Gating)
     pwm_generator #(
         .NUM_CHANNELS (NUM_CHANNELS),
-        .RESOLUTION   (RESOLUTION),
-        .COUNTER_MAX  (COUNTER_MAX)
+        .RESOLUTION   (RESOLUTION)
     ) u_generator (
         .clk_i    (clk_i),
         .arst_ni  (arst_ni),

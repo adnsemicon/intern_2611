@@ -35,7 +35,6 @@ Configuration and control are managed through an 8-bit synchronous memory-mapped
 | `ADDR_WIDTH`   | `int` |       `4`       | Width of the register address bus (`addr_i[3:0]`), supporting up to 16 address locations. |
 | `DATA_WIDTH`   | `int` |       `8`       | Configuration and readback bus data width (`wdata_i[7:0]`, `rdata_o[7:0]`).               |
 | `RESOLUTION`   | `int` |       `8`       | Bit-resolution of the PWM duty-cycle and timing reference counter ($2^8 = 256$ steps).    |
-| `COUNTER_MAX`  | `int` |      `255`      | Maximum terminal count value for the base counter ($2^{\text{RESOLUTION}} - 1$).          |
 
 ---
 

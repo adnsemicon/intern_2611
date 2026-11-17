@@ -7,7 +7,6 @@ module tb_pwm_8ch_controller;
     localparam int ADDR_WIDTH   = 4;
     localparam int DATA_WIDTH   = 8;
     localparam int RESOLUTION   = 8;
-    localparam int COUNTER_MAX  = 255;
     localparam time CLK_PERIOD  = 20ns; // 50 MHz
 
     // Clock and Reset signals
@@ -32,8 +31,7 @@ module tb_pwm_8ch_controller;
         .NUM_CHANNELS (NUM_CHANNELS),
         .ADDR_WIDTH   (ADDR_WIDTH),
         .DATA_WIDTH   (DATA_WIDTH),
-        .RESOLUTION   (RESOLUTION),
-        .COUNTER_MAX  (COUNTER_MAX)
+        .RESOLUTION   (RESOLUTION)
     ) dut (
         .clk_i   (vif.clk_i),
         .arst_ni (vif.arst_ni),
