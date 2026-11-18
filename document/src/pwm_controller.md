@@ -4,7 +4,7 @@
 
 ## Author: **The Team led by Adnan Sami Anirban**
 ***
-## Module Name: ` `
+## Module Name: `pwm_controller `
 
 ## Overview
 The PWM (Pulse Width Modulation) Controller is a digital hardware module designed to generate eight independent PWM output signals with programmable duty cycles. It uses a shared 8-bit free-running counter and eight comparators to determine the pulse width of each output channel. Each channel has an individual 8-bit duty-cycle register, allowing its duty cycle to be configured independently. An enable register controls the activation of each PWM channel. The controller also includes a register file with address-based write decoding and read-data selection to support configuration and status access.
@@ -47,9 +47,9 @@ The parameter table describes the configurable design parameters.
 
 | Parameter | Default Value | Description |
 |---|---:|---|
-| `PWM_CHANNELS` | 8 |  Number of independent PWM output channels |
-| `DATA_WIDTH`   | 8 |  Width of the duty-cycle and register data |
-| `COUNTER_WIDTH`| 8 |  Width of the free-running counter |
+| `NUM_CHANNELS` | 8 |  Number of independent PWM output channels |
+| `DATA_WIDTH`   | 8 |  Width of the register data bus (`wdata_i`, `rdata_o`) |
+| `RESOLUTION`| 8 |  Width of the free-running counter and of each duty-cycle register (PWM period = 2^RESOLUTION clocks) |
 | `ADDR_WIDTH`   | 4 |  Width of the register address |
 
 
@@ -60,6 +60,15 @@ The parameter table describes the configurable design parameters.
 
 ## Top-Level Ports
 
+The top-level signals are grouped in the SystemVerilog interface `pwm_if`
+(modport `DUT`).
+
+| Port | Type | Description |
+|---|---|---|
+| `vif` | `pwm_if.DUT` | Interface containing all signals listed below |
+
+
+
 ## Pin Description Table
 
 The pin table describes all top-level input and output signals.
@@ -68,8 +77,8 @@ The pin table describes all top-level input and output signals.
 | --- | --- | ---: | --- |
 | clk_i	    | Input | 1	| System clock input |
 | arst_ni	| Input	| 1	| Active-low asynchronous reset |
-| addr_i	| Input	| 4	| Register address input |
-| wdata_i	| Input	| 8	| Register write-data input |
+| addr_i	| Input	| ADDR_WIDTH (default 4)	| Register address input |
+| wdata_i	| Input	| DATA_WIDTH (default 8)	| Register write-data input |
 | wen_i	    | Input	| 1	| Register write-enable input |
 | rdata_o	| Output| 8	| Register read-data output |
 | pwm_o	    | Output| 8	| Eight independently controlled PWM output signals |
@@ -85,7 +94,7 @@ The pin table describes all top-level input and output signals.
 ## Microarchitecture
 *****************
 
-![PWM Controller](pwm_microarchitecture.svg)
+![PWM Controller](Pwm_microarchitecture.svg)
 
 The architecture consists of the following major blocks:
 
@@ -377,6 +386,19 @@ The intended safe output behavior is for all PWM outputs to remain LOW during re
 
 
 ## Simulation
+
+
+Use the project `Makefile` to build and run the design in simulation. From the project root, run:
+
+```
+make simulate TOP=pwm_top
+```
+
+This target builds the RTL sources (`pwm_generator.sv`, `pwm_registers.sv` and `pwm_top.sv`) together with the testbench, executes the run, and reports the outcome in the console or in an output log. The exact behaviour depends on how the `Makefile` is written, so open it to see which targets and variables it accepts.
+
+Design parameters such as `NUM_CHANNELS`, `DATA_WIDTH`, `RESOLUTION` and `ADDR_WIDTH` keep their default values unless the `Makefile` provides a way to override them. Passing a value on the command line has no effect if the `Makefile` doesn't forward it to the simulator.
+
+-If use interface then  `pwm_top` takes the `pwm_if` interface as a port, add `pwm_if.sv` to the file list ahead of `pwm_top.sv`, because the interface must be compiled first.
 
 
 ## Design Constraints and Assumptions
