@@ -33,10 +33,10 @@ module round_robin_arbiter #(
 
     // Internal signals
 
-    logic [PTR_W-1:0] master_order [0:N-1];
+    wire [PTR_W-1:0] master_order [0:N-1];
 
-    logic found;
-    logic [PTR_W-1:0] gnt_idx;
+    wire found;
+    wire [PTR_W-1:0] gnt_idx;
 
 
 
