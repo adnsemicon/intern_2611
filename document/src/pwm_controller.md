@@ -4,7 +4,7 @@
 
 ## Author: **The Team led by Adnan Sami Anirban**
 ***
-## Module Name: ` `
+## Module Name: `pwm_controller `
 
 ## Overview
 The PWM (Pulse Width Modulation) Controller is a digital hardware module designed to generate eight independent PWM output signals with programmable duty cycles. It uses a shared 8-bit free-running counter and eight comparators to determine the pulse width of each output channel. Each channel has an individual 8-bit duty-cycle register, allowing its duty cycle to be configured independently. An enable register controls the activation of each PWM channel. The controller also includes a register file with address-based write decoding and read-data selection to support configuration and status access.
@@ -386,6 +386,19 @@ The intended safe output behavior is for all PWM outputs to remain LOW during re
 
 
 ## Simulation
+
+
+Use the project `Makefile` to build and run the design in simulation. From the project root, run:
+
+```
+make simulate TOP=pwm_top
+```
+
+This target builds the RTL sources (`pwm_generator.sv`, `pwm_registers.sv` and `pwm_top.sv`) together with the testbench, executes the run, and reports the outcome in the console or in an output log. The exact behaviour depends on how the `Makefile` is written, so open it to see which targets and variables it accepts.
+
+Design parameters such as `NUM_CHANNELS`, `DATA_WIDTH`, `RESOLUTION` and `ADDR_WIDTH` keep their default values unless the `Makefile` provides a way to override them. Passing a value on the command line has no effect if the `Makefile` doesn't forward it to the simulator.
+
+-If use interface then  `pwm_top` takes the `pwm_if` interface as a port, add `pwm_if.sv` to the file list ahead of `pwm_top.sv`, because the interface must be compiled first.
 
 
 ## Design Constraints and Assumptions
