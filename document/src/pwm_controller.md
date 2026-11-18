@@ -68,7 +68,7 @@ The pin table describes all top-level input and output signals.
 | --- | --- | ---: | --- |
 | clk_i	    | Input | 1	| System clock input |
 | arst_ni	| Input	| 1	| Active-low asynchronous reset |
-| addr_i	| Input	| 4	| Register address input |
+| addr_i	| Input	| (parameterized default) 4	| Register address input |
 | wdata_i	| Input	| 8	| Register write-data input |
 | wen_i	    | Input	| 1	| Register write-enable input |
 | rdata_o	| Output| 8	| Register read-data output |
