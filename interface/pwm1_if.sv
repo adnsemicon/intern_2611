@@ -1,4 +1,4 @@
-interface pwm_if #(
+interface pwm1_if #(
     parameter int NUM_CHANNELS = 8,
     parameter int ADDR_WIDTH   = 4,
     parameter int DATA_WIDTH   = 8
