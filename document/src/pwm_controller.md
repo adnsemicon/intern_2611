@@ -398,7 +398,7 @@ This target builds the RTL sources (`pwm_generator.sv`, `pwm_registers.sv` and `
 
 Design parameters such as `NUM_CHANNELS`, `DATA_WIDTH`, `RESOLUTION` and `ADDR_WIDTH` keep their default values unless the `Makefile` provides a way to override them. Passing a value on the command line has no effect if the `Makefile` doesn't forward it to the simulator.
 
----If use interface then  `pwm_top` takes the `pwm_if` interface as a port, add `pwm_if.sv` to the file list ahead of `pwm_top.sv`, because the interface must be compiled first.
+-If use interface then  `pwm_top` takes the `pwm_if` interface as a port, add `pwm_if.sv` to the file list ahead of `pwm_top.sv`, because the interface must be compiled first.
 
 
 ## Design Constraints and Assumptions
