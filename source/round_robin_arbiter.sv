@@ -12,7 +12,7 @@
 | 1.0      | 2026-11-18 | Ashiqur Rahman Anik   | Top module added     |
 
 Author : Ashiqur Rahman Anik (anikr4392@gmail.com)
-This file is part of adnsemicon/adn_common
+This file is part of adnsemicon/intern_2611
 Copyright (c) 2026 ADN Semiconductors
 Licensed under the MIT License
 See LICENSE file in the project root for full license information
