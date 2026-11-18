@@ -1,4 +1,4 @@
-interface pwm1_if #(
+interface pwm_if #(
     parameter int NUM_CHANNELS = 8,
     parameter int ADDR_WIDTH   = 4,
     parameter int DATA_WIDTH   = 8
@@ -13,15 +13,10 @@ interface pwm1_if #(
     logic [DATA_WIDTH-1:0]   rdata_o;
     logic [NUM_CHANNELS-1:0] pwm_o;
 
-    // Directions are needed so synthesis knows which side drives what
+    // Modport for the design (pwm_top): defines signal directions
     modport DUT (
         input  clk_i, arst_ni, addr_i, wdata_i, wen_i,
         output rdata_o, pwm_o
-    );
-
-    modport TB (
-        input  clk_i, arst_ni, rdata_o, pwm_o,
-        output addr_i, wdata_i, wen_i
     );
 
 endinterface
