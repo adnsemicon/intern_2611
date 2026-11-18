@@ -47,9 +47,9 @@ The parameter table describes the configurable design parameters.
 
 | Parameter | Default Value | Description |
 |---|---:|---|
-| `PWM_CHANNELS` | 8 |  Number of independent PWM output channels |
-| `DATA_WIDTH`   | 8 |  Width of the duty-cycle and register data |
-| `COUNTER_WIDTH`| 8 |  Width of the free-running counter |
+| `NUM_CHANNELS` | 8 |  Number of independent PWM output channels |
+| `DATA_WIDTH`   | 8 |  Width of the register data bus (`wdata_i`, `rdata_o`) |
+| `RESOLUTION`| 8 |  Width of the free-running counter and of each duty-cycle register (PWM period = 2^RESOLUTION clocks) |
 | `ADDR_WIDTH`   | 4 |  Width of the register address |
 
 
@@ -60,6 +60,15 @@ The parameter table describes the configurable design parameters.
 
 ## Top-Level Ports
 
+The top-level signals are grouped in the SystemVerilog interface `pwm_if`
+(modport `DUT`).
+
+| Port | Type | Description |
+|---|---|---|
+| `vif` | `pwm_if.DUT` | Interface containing all signals listed below |
+
+
+
 ## Pin Description Table
 
 The pin table describes all top-level input and output signals.
@@ -68,8 +77,8 @@ The pin table describes all top-level input and output signals.
 | --- | --- | ---: | --- |
 | clk_i	    | Input | 1	| System clock input |
 | arst_ni	| Input	| 1	| Active-low asynchronous reset |
-| addr_i	| Input	| (parameterized default) 4	| Register address input |
-| wdata_i	| Input	| 8	| Register write-data input |
+| addr_i	| Input	| ADDR_WIDTH (default 4)	| Register address input |
+| wdata_i	| Input	| DATA_WIDTH (default 8)	| Register write-data input |
 | wen_i	    | Input	| 1	| Register write-enable input |
 | rdata_o	| Output| 8	| Register read-data output |
 | pwm_o	    | Output| 8	| Eight independently controlled PWM output signals |
