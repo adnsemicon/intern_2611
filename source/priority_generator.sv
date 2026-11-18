@@ -1,3 +1,24 @@
+/* 
+
+## Purpose
+This module (Priority generator) generates a priority sequence for a given number of masters (N). The priority sequence is updated based on the index of the granted master (gnt_idx_i). The priority sequence is represented as an array of indices (master_order_o) that indicates the order of priority for the masters.
+
+## Use case
+The priority generator is typically used in systems where multiple masters compete for access to a shared resource, such as a bus or memory. The priority sequence determines which master has the highest priority to access the resource at any given time. When a master is granted access, the priority sequence is updated to rotate the priorities, ensuring fair access among all masters.   
+
+
+
+ | REVISION | DATE       | AUTHOR                                  | DESCRIPTION                                |
+ |----------|------------|-----------------------------------------|--------------------------------------------|
+ | 1.0      | 2026-11-18 | Asadul_Rafi                             | Added priority generator                   |
+
+Author : Asadul Akther (rafiasadul27@gmail.com)
+This file is part of adnsemicon/adn_common
+Copyright (c) 2026 ADN Semiconductors
+Licensed under the MIT License
+See LICENSE file in the project root for full license information
+
+*/
 module priority_generator #(
     parameter int N,
     parameter int PTR_W
