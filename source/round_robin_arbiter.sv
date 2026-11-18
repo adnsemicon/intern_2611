@@ -1,6 +1,23 @@
-//==================================================
-// MODULE 1: TOP MODULE
-//==================================================
+/* 
+
+## Purpose:
+    Implements a round-robin arbiter with N requesters. The arbiter grants access to one of the requesters based on a round-robin priority scheme.
+  
+## Use cases:
+    - Arbitration in shared resources (e.g., buses, memory controllers) where fairness is required among multiple requesters.
+    - Systems where multiple masters need to access a single slave resource without starvation.
+
+| REVISION | DATE        | AUTHOR               | DESCRIPTION          |
+|----------|------------|-----------------------|----------------------|
+| 1.0      | 2026-11-18 | Ashiqur Rahman Anik   | Top module added     |
+
+Author : Ashiqur Rahman Anik (anikr4392@gmail.com)
+This file is part of adnsemicon/adn_common
+Copyright (c) 2026 ADN Semiconductors
+Licensed under the MIT License
+See LICENSE file in the project root for full license information
+
+*/
 
 module round_robin_arbiter #(
     parameter int N = 8,
@@ -22,7 +39,6 @@ module round_robin_arbiter #(
     logic [PTR_W-1:0] gnt_idx;
 
 
-    // Priority Generator Instantiation
 
     priority_generator #(
         .N(N),
@@ -40,7 +56,6 @@ module round_robin_arbiter #(
     );
 
 
-    // Grant Generator Instantiation
 
     grant_generator #(
         .N(N),
