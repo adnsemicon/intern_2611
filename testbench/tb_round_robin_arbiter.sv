@@ -2,7 +2,9 @@
 
 `include "round_robin_arbiter_if.sv"
 
-module tb_round_robin_arbiter;
+module tb_round_robin_arbiter #(
+    parameter int TEST = 0  // 0: all, 1: tc1, 2: tc2, 3: tc3, 4: tc4
+);
 
   // LOCAL PARAMETERS (Core count: 4, 8, etc.)
   localparam int N = 4;
@@ -99,10 +101,6 @@ module tb_round_robin_arbiter;
   // MAIN INITIAL BLOCK
   // =========================================================================
   initial begin
-    int plusarg_status;
-    string test_name;
-    test_name = "all";
-
     pass_count = 0;
     fail_count = 0;
 
@@ -125,17 +123,15 @@ module tb_round_robin_arbiter;
     @(posedge intf.clk_i);
 
     // =======================================================================
-    // 4. RUN TESTS
-    // Default runs all tests; pass +TEST=<name> or make TEST=tc<n> to run individual tests
+    // 4. RUN TESTS based on module parameter (NO plusargs!)
     // =======================================================================
-    plusarg_status = $value$plusargs("TEST=%s", test_name);
-    $display("\n[TB] Running with TEST='%s'...", test_name);
+    $display("\n[TB] Running with TEST parameter = %0d...", TEST);
 
-    case (test_name)
-      "tc1":    tc1();
-      "tc2":    tc2();
-      "tc3":    tc3();
-      "tc4":    tc4();
+    case (TEST)
+      1: tc1();
+      2: tc2();
+      3: tc3();
+      4: tc4();
       default: begin
         tc1();
         tc2();

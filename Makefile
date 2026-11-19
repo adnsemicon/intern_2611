@@ -1,5 +1,20 @@
 TOP ?= tb_round_robin_arbiter
-TEST ?= all
+TEST ?= 0
+
+# Support both numeric (1, 2, 3, 4, 0) and name (tc1, tc2, tc3, tc4, all)
+ifeq ($(TEST),tc1)
+  TEST_VAL = 1
+else ifeq ($(TEST),tc2)
+  TEST_VAL = 2
+else ifeq ($(TEST),tc3)
+  TEST_VAL = 3
+else ifeq ($(TEST),tc4)
+  TEST_VAL = 4
+else ifeq ($(TEST),all)
+  TEST_VAL = 0
+else
+  TEST_VAL = $(TEST)
+endif
 
 XVLOG ?= $(shell which xvlog.bat 2>/dev/null || which xvlog 2>/dev/null || echo xvlog)
 XELAB ?= $(shell which xelab.bat 2>/dev/null || which xelab 2>/dev/null || echo xelab)
@@ -21,9 +36,9 @@ simulate:
 	@mkdir -p build
 	@echo "*" > build/.gitignore
 	@cd build && $(XVLOG) -sv $(FILES)
-	@cd build && $(XELAB) $(TOP) -s snap_$(TOP) -debug all
-	@printf "%s\n" "-R" "-testplusarg TEST=$(TEST)" "snap_$(TOP)" > build/xsim_args.txt
-	@cd build && $(XSIM) -f xsim_args.txt
+	@printf "%s\n" "-generic_top TEST=$(TEST_VAL)" "-s snap_$(TOP)" "-debug all" > build/xelab_args.txt
+	@cd build && $(XELAB) $(TOP) -f xelab_args.txt
+	@cd build && $(XSIM) snap_$(TOP) -R
 
 .PHONY: clean
 clean:
