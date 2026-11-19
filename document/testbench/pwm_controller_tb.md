@@ -88,7 +88,7 @@ The PWM period is 256 clock cycles for the default 8-bit resolution.
 
 ## Test Cases
 
-### TC01 – Reset Functionality
+### TC01 – Reset Functionality (Ashiqur Rahman Anik)
 
 #### Objective
 Verify that the PWM controller resets the duty-cycle registers, enable register, and counter to their default values, resulting in all PWM outputs being LOW.
@@ -112,7 +112,7 @@ Verify that the PWM controller resets the duty-cycle registers, enable register,
 
 ---
 
-### TC02 – Duty-Cycle Register Write Read Operation
+### TC02 – Duty-Cycle Register Write Read Operation (Asadul Akther)
 
 #### Objective
 Verify that duty-cycle values can be written to individual channel registers and read back correctly through the address interface.
@@ -134,7 +134,7 @@ Verify that duty-cycle values can be written to individual channel registers and
 
 ---
 
-### TC03 – Write Enable and Write Protection
+### TC03 – Write Enable and Write Protection (Taseen Israque)
 
 #### Objective
 Verify that the PWM registers are updated only when `wen_i` is asserted and that register contents remain unchanged when write enable is LOW.
@@ -157,30 +157,9 @@ Verify that the PWM registers are updated only when `wen_i` is asserted and that
 
 ---
 
-### TC04 – Invalid Address Handling
 
-#### Objective
-Verify that the PWM controller safely handles unimplemented register addresses without modifying valid registers and returns zero during invalid-address reads.
 
-#### Steps
-- Reset the DUT and initialize the valid duty-cycle and enable registers.
-- Access the invalid address range from `0x9` to `0xF`.
-- Attempt to write different values to the invalid addresses.
-- Read invalid addresses and verify zero readback, then confirm that valid registers remain unchanged.
-
-#### Pass Criteria
-
-| Check | Expected |
-|---|---|
-| Invalid address range | `0x9`–`0xF` |
-| Invalid address write | No register updates |
-| Invalid address read | `rdata_o = 0x00` |
-| Valid registers after invalid writes | Previous values retained |
-| Invalid address handling | No unintended register modification |
-
----
-
-### TC05 – PWM Duty-Cycle Accuracy
+### TC04 – PWM Duty-Cycle Accuracy (Ashiqur Rahman Anik)
 
 #### Objective
 Verify that the PWM generator produces the correct number of HIGH clock samples for programmed duty-cycle values over one complete PWM period.
@@ -204,7 +183,7 @@ Verify that the PWM generator produces the correct number of HIGH clock samples 
 
 ---
 
-### TC06 – Counter Operation and PWM Frequency
+### TC05 – Counter Operation and PWM Frequency (Taseen Israque)
 
 #### Objective
 Verify that the PWM counter increments on every rising clock edge, wraps around after reaching its maximum value, and generates PWM signals with the expected period and frequency.
@@ -229,7 +208,7 @@ Verify that the PWM counter increments on every rising clock edge, wraps around 
 
 ---
 
-### TC07 – Boundary and Corner-Case Testing
+### TC06 – Boundary and Corner-Case Testing (Asadul Akther)
 
 #### Objective
 Verify the PWM controller's behavior under boundary conditions and corner cases, including extreme duty-cycle values, enable patterns, simultaneous channel operation, and invalid register accesses.
