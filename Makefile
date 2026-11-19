@@ -2,25 +2,15 @@ TOP ?= tb_round_robin_arbiter
 TEST ?= 0
 ERROR_INJECT ?= 0
 
-# Support both numeric (1, 2, 3, 4, 5, 0) and name (tc1, tc2, tc3, tc4, tc5, all)
-ifeq ($(TEST),tc1)
-  TEST_VAL = 1
-else ifeq ($(TEST),tc2)
-  TEST_VAL = 2
-else ifeq ($(TEST),tc3)
-  TEST_VAL = 3
-else ifeq ($(TEST),tc4)
-  TEST_VAL = 4
-else ifeq ($(TEST),tc5)
-  TEST_VAL = 5
+# Dynamic test mapping: automatically converts any tc<N> -> <N>, leaves <N> as <N>, all -> 0
+ifeq ($(TEST),all)
+  TEST_VAL = 0
 else ifeq ($(TEST),fault)
   TEST_VAL = 5
 else ifeq ($(TEST),err)
   TEST_VAL = 5
-else ifeq ($(TEST),all)
-  TEST_VAL = 0
 else
-  TEST_VAL = $(TEST)
+  TEST_VAL = $(patsubst tc%,%,$(TEST))
 endif
 
 XVLOG ?= $(shell which xvlog.bat 2>/dev/null || which xvlog 2>/dev/null || echo xvlog)
