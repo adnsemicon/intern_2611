@@ -90,24 +90,6 @@ module tb_round_robin_arbiter;
     end
   endtask
 
-  // =========================================================================
-  // TEST CASES
-  // =========================================================================
-  // HOW TO ADD AND RUN YOUR TEST (SIMPLE 3 STEPS):
-  // 1. Write your test inside Round_robin_tb/ (e.g. Round_robin_tb/tc1.sv).
-  //    Inside it, use the common tasks:
-  //        task automatic tc1();
-  //            apply_reset();
-  //            apply_and_check(4'b0001, 4'b0001, "Core 0 wins");
-  //        endtask
-  //
-  // 2. Uncomment the `include below:
-  //        `include "Round_robin_tb/tc1.sv"
-  //
-  // 3. Uncomment your test call in the initial block below:
-  //        tc1();
-  // =========================================================================
-
   // `include "Round_robin_tb/tc1.sv"
   // `include "Round_robin_tb/tc2.sv"
 
