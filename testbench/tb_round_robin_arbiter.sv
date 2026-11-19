@@ -15,6 +15,9 @@ module tb_round_robin_arbiter #(
   int fail_count;
   string test_name;
 
+  // CLOCK CONTROL
+  bit clk_en = 0;
+
   // INTERFACE INSTANTIATION
   round_robin_arbiter_if #(.N(N)) intf ();
 
@@ -32,17 +35,33 @@ module tb_round_robin_arbiter #(
   // COMMON TASKS (All teammates can call these directly from their testcases)
   // =========================================================================
 
-  // 1. Clock Generation Task
+  // 1. Clock Generation Task (controlled by clk_en)
   task automatic start_clock(input int half_period_ns = 5);
     fork
-      forever #half_period_ns intf.clk_i = ~intf.clk_i;
+      forever begin
+        #half_period_ns;
+        if (clk_en) intf.clk_i = ~intf.clk_i;
+      end
     join_none
   endtask
 
-  // 2. Reset Task: asserts active-low reset, clears requests, releases synchronously
+  // 2. Standard Synchronous Reset Task (for running clock)
   task automatic apply_reset(input int reset_cycles = 2);
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
+    repeat (reset_cycles) @(negedge intf.clk_i);
+    intf.arst_ni = 1'b1;
+    #1;
+  endtask
+
+  // 3. Reset with Delayed Clock Task (stops clk, holds reset, delays, then restarts clk)
+  task automatic apply_reset_delayed_clk(input int pre_clk_ns = 12, input int reset_cycles = 2);
+    clk_en       = 0;
+    intf.clk_i   = 1'b0;
+    intf.arst_ni = 1'b0;
+    intf.req_i   = '0;
+    #pre_clk_ns;
+    clk_en = 1;                           // clock starts after the delay
     repeat (reset_cycles) @(negedge intf.clk_i);
     intf.arst_ni = 1'b1;
     #1;
@@ -133,12 +152,11 @@ module tb_round_robin_arbiter #(
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
 
-    // 2. Power-on stabilization delay before clock starts
-    #12;
-
-    // 3. Start clock and apply initial reset
+    // 2. Start clock process (gated by clk_en)
     start_clock();
-    apply_reset();
+
+    // 3. Apply initial reset with delayed clock start
+    apply_reset_delayed_clk(12, 2);
  
 
     // =======================================================================
