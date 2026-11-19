@@ -128,19 +128,18 @@ module tb_round_robin_arbiter #(
     $dumpfile("tb_round_robin_arbiter.vcd");
     $dumpvars(0, tb_round_robin_arbiter);
 
-    // 1. Initial state: hold clock low and active-low reset asserted
+    // 1. Initial state: hold reset active from t=0
     intf.clk_i   = 1'b0;
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
-    #20;
 
-    // 2. Release reset
-    intf.arst_ni = 1'b1;
-    #20;
+    // 2. Power-on stabilization delay before clock starts
+    #12;
 
-    // 3. Start clock
+    // 3. Start clock and apply initial reset
     start_clock();
-    @(posedge intf.clk_i);
+    apply_reset();
+ 
 
     // =======================================================================
     // 4. RUN TESTS based on test_name plusarg

@@ -17,8 +17,6 @@ task automatic tc8();
     $display("      TESTCASE 8: NO X/Z ON GRANT OUTPUT   ");
     $display("==========================================");
 
-    apply_reset();
-
     // Right after reset, no requests
     tc_drive('0);
     check(!$isunknown(intf.gnt_o), "TC8.1: gnt_o is known after reset with no request");

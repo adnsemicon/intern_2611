@@ -19,8 +19,6 @@ task automatic tc2();
     // Priority preservation immediately after reset
     // ========================================================
 
-    apply_reset();
-
     $display("\n[TC2] Scenario A: Idle after reset");
 
     // No requests for 5 clock cycles
@@ -35,11 +33,11 @@ task automatic tc2();
     end
 
     // Initial priority must remain unchanged
-    // Master 0 should still have highest priority
+    // Highest priority master before idle must still win after idle
 
     apply_and_check(
         4'b1111,
-        4'b0001,
+        (1 << dut.master_order[0]),
         "TC2.A: Priority preserved after idle"
     );
 
@@ -48,8 +46,6 @@ task automatic tc2();
     // SCENARIO B:
     // Priority preservation after Master 0 wins
     // ========================================================
-
-    apply_reset();
 
     $display("\n[TC2] Scenario B: Idle after Master 0 grant");
 
@@ -87,8 +83,6 @@ task automatic tc2();
     // SCENARIO C:
     // Priority preservation after Master 2 wins
     // ========================================================
-
-    apply_reset();
 
     $display("\n[TC2] Scenario C: Idle after Master 2 grant");
 

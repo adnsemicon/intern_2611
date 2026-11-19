@@ -17,8 +17,6 @@ task automatic tc6();
     $display("   TESTCASE 6: REQUEST GLITCH BETWEEN EDGES");
     $display("==========================================");
 
-    apply_reset();
-
     // Raise all requests at the falling edge and look at the grant
     @(negedge intf.clk_i);
     intf.req_i = '1;
