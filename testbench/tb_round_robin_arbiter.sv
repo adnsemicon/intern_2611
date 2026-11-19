@@ -3,7 +3,8 @@
 `include "round_robin_arbiter_if.sv"
 
 module tb_round_robin_arbiter #(
-    parameter int TEST = 0  // 0: all, 1: tc1, 2: tc2, 3: tc3, 4: tc4
+    parameter int TEST         = 0,  // 0: all, 1: tc1, 2: tc2, 3: tc3, 4: tc4, 5: tc5 (fault injection)
+    parameter bit ERROR_INJECT = 0   // 0: normal, 1: globally inject corrupted expected values
 );
 
   // LOCAL PARAMETERS (Core count: 4, 8, etc.)
@@ -63,12 +64,18 @@ module tb_round_robin_arbiter #(
       input logic [N-1:0] expected,
       input string        msg
   );
+    logic [N-1:0] check_expected;
+    check_expected = (ERROR_INJECT) ? ~expected : expected;
+
     @(negedge intf.clk_i);
     intf.req_i = request;
 
     // Check combinational grant output before next posedge
     #1;
-    check(intf.gnt_o === expected, $sformatf("%s (expected=%b, got=%b)", msg, expected, intf.gnt_o));
+    check(intf.gnt_o === check_expected,
+          $sformatf("%s (expected=%b, got=%b)%s",
+                    msg, check_expected, intf.gnt_o,
+                    ERROR_INJECT ? " [FAULT INJECTED]" : ""));
 
     // Allow clock edge for arbiter priority state to update
     @(posedge intf.clk_i);
@@ -96,6 +103,7 @@ module tb_round_robin_arbiter #(
    `include "Round_robin_tb/tc2.sv"
    `include "Round_robin_tb/tc3.sv"
    `include "Round_robin_tb/tc4.sv"
+   `include "Round_robin_tb/tc5.sv"
 
   // =========================================================================
   // MAIN INITIAL BLOCK
@@ -125,13 +133,14 @@ module tb_round_robin_arbiter #(
     // =======================================================================
     // 4. RUN TESTS based on module parameter (NO plusargs!)
     // =======================================================================
-    $display("\n[TB] Running with TEST parameter = %0d...", TEST);
+    $display("\n[TB] Running with TEST parameter = %0d, ERROR_INJECT = %0b...", TEST, ERROR_INJECT);
 
     case (TEST)
       1: tc1();
       2: tc2();
       3: tc3();
       4: tc4();
+      5: tc5();
       default: begin
         tc1();
         tc2();
