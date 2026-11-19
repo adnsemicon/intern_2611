@@ -13,6 +13,7 @@ module tb_round_robin_arbiter #(
   // PASS / FAIL COUNTERS
   int pass_count;
   int fail_count;
+  string test_name;
 
   // INTERFACE INSTANTIATION
   round_robin_arbiter_if #(.N(N)) intf ();
@@ -119,6 +120,9 @@ module tb_round_robin_arbiter #(
   initial begin
     pass_count = 0;
     fail_count = 0;
+    if (!$value$plusargs("TEST=%s", test_name)) begin
+      test_name = "all";
+    end
 
     $timeformat(-9, 1, " ns", 20);
     $dumpfile("tb_round_robin_arbiter.vcd");
@@ -139,11 +143,11 @@ module tb_round_robin_arbiter #(
     @(posedge intf.clk_i);
 
     // =======================================================================
-    // 4. RUN TESTS based on module parameter (NO plusargs!)
+    // 4. RUN TESTS based on test_name plusarg
     // =======================================================================
-    $display("\n[TB] Running with TEST parameter = %0d, ERROR_INJECT = %0b...", TEST, ERROR_INJECT);
+    $display("\n[TB] Running with TEST = '%s', ERROR_INJECT = %0b...", test_name, ERROR_INJECT);
 
-    case (TEST)
+    case (test_name)
       "tc1":    tc1();
       "tc2":    tc2();
       "tc3":    tc3();
@@ -153,8 +157,8 @@ module tb_round_robin_arbiter #(
       "tc7":    tc7();
       "tc8":    tc8();
       "tc9":    tc9();
-      "tc10":    tc10();
-      "tc11":    tc11();
+      "tc10":   tc10();
+      "tc11":   tc11();
       default: begin
         tc1(); tc2(); tc3(); tc4();
         tc6(); tc7(); tc8(); tc9();

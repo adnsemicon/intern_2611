@@ -1,17 +1,6 @@
 TOP ?= tb_round_robin_arbiter
-TEST ?= 0
+TEST ?= all
 ERROR_INJECT ?= 0
-
-# Dynamic test mapping: automatically converts any tc<N> -> <N>, leaves <N> as <N>, all -> 0
-ifeq ($(TEST),all)
-  TEST_VAL = 0
-else ifeq ($(TEST),fault)
-  TEST_VAL = 5
-else ifeq ($(TEST),err)
-  TEST_VAL = 5
-else
-  TEST_VAL = $(patsubst tc%,%,$(TEST))
-endif
 
 XVLOG ?= $(shell which xvlog.bat 2>/dev/null || which xvlog 2>/dev/null || echo xvlog)
 XELAB ?= $(shell which xelab.bat 2>/dev/null || which xelab 2>/dev/null || echo xelab)
@@ -33,9 +22,10 @@ simulate:
 	@mkdir -p build
 	@echo "*" > build/.gitignore
 	@cd build && $(XVLOG) -sv $(FILES)
-	@printf "%s\n" "-generic_top TEST=$(TEST_VAL)" "-generic_top ERROR_INJECT=$(ERROR_INJECT)" "-s snap_$(TOP)" "-debug all" > build/xelab_args.txt
+	@printf "%s\n" "-generic_top ERROR_INJECT=$(ERROR_INJECT)" "-s snap_$(TOP)" "-debug all" > build/xelab_args.txt
 	@cd build && $(XELAB) $(TOP) -f xelab_args.txt
-	@cd build && $(XSIM) snap_$(TOP) -R
+	@printf "%s\n" "-R" "-testplusarg TEST=$(TEST)" "snap_$(TOP)" > build/xsim_args.txt
+	@cd build && $(XSIM) -f xsim_args.txt
 
 .PHONY: clean
 clean:
