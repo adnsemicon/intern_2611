@@ -45,26 +45,16 @@ module tb_round_robin_arbiter #(
     join_none
   endtask
 
-  // 2. Standard Synchronous Reset Task (for running clock)
-  task automatic apply_reset(input int reset_cycles = 2);
-    intf.arst_ni = 1'b0;
-    intf.req_i   = '0;
-    repeat (reset_cycles) @(negedge intf.clk_i);
-    intf.arst_ni = 1'b1;
-    #1;
-  endtask
-
-  // 3. Reset with Delayed Clock Task (stops clk, holds reset, delays, then restarts clk)
-  task automatic apply_reset_delayed_clk(input int pre_clk_ns = 12, input int reset_cycles = 2);
+  // 2. Reset low + clock flat -> reset releases -> clock starts after a delay
+  task automatic apply_reset(input int reset_ns = 22, input int clk_start_delay_ns = 12);
     clk_en       = 0;
-    intf.clk_i   = 1'b0;
+    intf.clk_i   = 1'b0;      // clock held low during reset
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
-    #pre_clk_ns;
-    clk_en = 1;                           // clock starts after the delay
-    repeat (reset_cycles) @(negedge intf.clk_i);
-    intf.arst_ni = 1'b1;
-    #1;
+    #reset_ns;
+    intf.arst_ni = 1'b1;      // reset releases first
+    #clk_start_delay_ns;
+    clk_en = 1;               // clock starts after reset is high
   endtask
 
   // 3. Self-Checking Assertion Task: increments pass/fail count and prints log
@@ -152,11 +142,9 @@ module tb_round_robin_arbiter #(
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
 
-    // 2. Start clock process (gated by clk_en)
-    start_clock();
-
-    // 3. Apply initial reset with delayed clock start
-    apply_reset_delayed_clk(12, 2);
+    // 2. Start clock and apply initial reset
+    start_clock();     // once
+    apply_reset();     // reset low -> release -> clock starts
  
 
     // =======================================================================
