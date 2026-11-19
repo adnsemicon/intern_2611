@@ -20,6 +20,8 @@ task automatic tc1();
     // --------------------------------------------------------
     // Test 1: Only Master 0 requests
     // --------------------------------------------------------
+    apply_reset();
+
     apply_and_check(
         4'b0001,
         4'b0001,
@@ -29,6 +31,7 @@ task automatic tc1();
     // --------------------------------------------------------
     // Test 2: Only Master 1 requests
     // --------------------------------------------------------
+    apply_reset();
 
     apply_and_check(
         4'b0010,
@@ -39,7 +42,7 @@ task automatic tc1();
     // --------------------------------------------------------
     // Test 3: Only Master 2 requests
     // --------------------------------------------------------
-  
+    apply_reset();
 
     apply_and_check(
         4'b0100,
@@ -50,7 +53,7 @@ task automatic tc1();
     // --------------------------------------------------------
     // Test 4: Only Master 3 requests
     // --------------------------------------------------------
-  
+    apply_reset();
 
     apply_and_check(
         4'b1000,
@@ -62,7 +65,7 @@ task automatic tc1();
     // Test 5: All masters request
     // Highest priority Master 0 must win
     // --------------------------------------------------------
-  
+    apply_reset();
 
     apply_and_check(
         4'b1111,
@@ -74,7 +77,7 @@ task automatic tc1();
     // Test 6: Masters 1, 2, 3 request
     // Master 1 has highest priority
     // --------------------------------------------------------
-   
+    apply_reset();
 
     apply_and_check(
         4'b1110,
@@ -86,7 +89,7 @@ task automatic tc1();
     // Test 7: Masters 2 and 3 request
     // Master 2 has higher priority
     // --------------------------------------------------------
-    
+    apply_reset();
 
     apply_and_check(
         4'b1100,
@@ -98,11 +101,11 @@ task automatic tc1();
     // Test 8: Masters 1 and 3 request
     // Master 1 has higher priority
     // --------------------------------------------------------
-    
+    apply_reset();
 
     apply_and_check(
         4'b1010,
-        4'b1000,
+        4'b0010,
         "TC1.8: Masters 1,3 request, Master 1 wins"
     );
 
@@ -110,7 +113,7 @@ task automatic tc1();
     // Test 9: Masters 0 and 3 request
     // Master 0 has higher priority
     // --------------------------------------------------------
-    
+    apply_reset();
 
     apply_and_check(
         4'b1001,
@@ -122,7 +125,7 @@ task automatic tc1();
     // Test 10: Masters 1 and 2 request
     // Master 1 has higher priority
     // --------------------------------------------------------
-   
+    apply_reset();
 
     apply_and_check(
         4'b0110,

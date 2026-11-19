@@ -15,7 +15,8 @@ task automatic tc9();
     $display("   TESTCASE 9: RANDOM WITH REFERENCE MODEL");
     $display("==========================================");
 
-    for (int i = 0; i < N; i++) model[i] = dut.master_order[i];
+    apply_reset();
+    for (int i = 0; i < N; i++) model[i] = i;
 
     for (int c = 0; c < 21000; c++) begin
         if      (c < 7000)  r = $urandom;                        // medium density

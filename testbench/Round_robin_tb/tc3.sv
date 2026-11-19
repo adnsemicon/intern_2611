@@ -39,6 +39,8 @@ task automatic tc3();
  $display(" TESTCASE 3: FULL ROTATION & WRAP-AROUND ");
  $display("==========================================");
 
+ apply_reset();
+
  verify_rotation(2);
 
  $display("\n[TC3] Full Rotation & Wrap-Around Test Completed.\n");
