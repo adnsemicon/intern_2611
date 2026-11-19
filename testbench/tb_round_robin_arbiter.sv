@@ -3,7 +3,7 @@
 `include "round_robin_arbiter_if.sv"
 
 module tb_round_robin_arbiter #(
-    parameter int TEST         = 0,  // 0: all, 1: tc1, 2: tc2, 3: tc3, 4: tc4, 5: tc5 (fault injection)
+    parameter int TEST         = 0,  // 0: all, 1: tc1, 2: tc2, 3: tc3, 4: tc4, 5: tc5 (fault injection), 6: tc6, 7: tc7, 8: tc8, 9: tc9, 10:tc10, 11:tc11
     parameter bit ERROR_INJECT = 0   // 0: normal, 1: globally inject corrupted expected values
 );
 
@@ -104,6 +104,14 @@ module tb_round_robin_arbiter #(
    `include "Round_robin_tb/tc3.sv"
    `include "Round_robin_tb/tc4.sv"
    `include "Round_robin_tb/tc5.sv"
+   `include "Round_robin_tb/tc_helpers.sv"
+   `include "Round_robin_tb/tc6.sv"
+   `include "Round_robin_tb/tc7.sv"
+   `include "Round_robin_tb/tc8.sv"
+   `include "Round_robin_tb/tc9.sv"
+   `include "Round_robin_tb/tc10.sv"
+   `include "Round_robin_tb/tc11.sv"
+
 
   // =========================================================================
   // MAIN INITIAL BLOCK
@@ -136,16 +144,21 @@ module tb_round_robin_arbiter #(
     $display("\n[TB] Running with TEST parameter = %0d, ERROR_INJECT = %0b...", TEST, ERROR_INJECT);
 
     case (TEST)
-      1: tc1();
-      2: tc2();
-      3: tc3();
-      4: tc4();
-      5: tc5();
+      "tc1":    tc1();
+      "tc2":    tc2();
+      "tc3":    tc3();
+      "tc4":    tc4();
+      "tc5":    tc5();    
+      "tc6":    tc6();
+      "tc7":    tc7();
+      "tc8":    tc8();
+      "tc9":    tc9();
+      "tc10":    tc10();
+      "tc11":    tc11();
       default: begin
-        tc1();
-        tc2();
-        tc3();
-        tc4();
+        tc1(); tc2(); tc3(); tc4();
+        tc6(); tc7(); tc8(); tc9();
+        tc10(); tc11();
       end
     endcase
 
