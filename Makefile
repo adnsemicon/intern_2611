@@ -47,5 +47,5 @@ help:
 	@echo "This repository is a SystemVerilog project for Round Robin Arbiter verification."
 	@echo -e "\033[1;34m  make simulate\033[0m \033[1;35m[TOP=<TB>]\033[0m \033[1;35m[TEST=<tc1|tc2|tc3|tc4|tc5|all>]\033[0m \033[1;35m[ERROR_INJECT=<0|1>]\033[0m\033[55G\033[1;32m# Run simulation\033[0m"
 	@echo -e "\033[1;34m  make clean\033[0m\033[55G\033[1;32m# Remove all temporary build files\033[0m"
-	@echo "Please read the README.md for further details"
+	@echo "Please read documents/tb/round_robin_arbiter_tb.md for further details"
 	@echo ""
