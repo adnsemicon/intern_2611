@@ -45,7 +45,7 @@ module tb_round_robin_arbiter #(
     join_none
   endtask
 
-  // 2. Reset low + clock flat -> reset releases -> clock starts after a delay
+  // 2. Power-on Reset: clock stopped during reset, starts after release (use at time 0)
   task automatic apply_reset(input int reset_ns = 22, input int clk_start_delay_ns = 12);
     clk_en       = 0;
     intf.clk_i   = 1'b0;      // clock held low during reset
@@ -55,6 +55,15 @@ module tb_round_robin_arbiter #(
     intf.arst_ni = 1'b1;      // reset releases first
     #clk_start_delay_ns;
     clk_en = 1;               // clock starts after reset is high
+  endtask
+
+  // 3. Mid-test Reset: synchronous reset across clock cycles (needs a running clock)
+  task automatic apply_reset_cycles(input int reset_cycles = 2);
+    intf.arst_ni = 1'b0;
+    intf.req_i   = '0;
+    repeat (reset_cycles) @(negedge intf.clk_i);
+    intf.arst_ni = 1'b1;
+    #1;
   endtask
 
   // 3. Self-Checking Assertion Task: increments pass/fail count and prints log
