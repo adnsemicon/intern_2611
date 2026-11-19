@@ -2,16 +2,6 @@
 
 
 
-## Document Information
-
-| Item | Description |
-|---|---|
-| Testbench | `pwm_tb` |
-| DUT | `pwm_top` |
-| Verification Level | Module-level wrapper |
-| Language | SystemVerilog |
-| Verification Style | Directed self-checking |
-
 ## Target DUT
 
 `pwm_top` is the top-level PWM controller module. It instantiates `pwm_registers` and `pwm_generator`, provides the register configuration interface, and generates eight independently controlled PWM output signals.
@@ -245,13 +235,7 @@ pwm_tb summary: pass=<N> fail=0
 
 Any nonzero failure count indicates that one or more test cases failed. The testbench terminates the simulation with `$fatal` if failures are detected.
 
-## Verification Scope
 
-The testbench focuses on verifying the top-level PWM controller functionality, including register configuration, read/write behavior, PWM waveform generation, output enable logic, channel independence, counter operation, and reset behavior.
-
-The verification is performed through the `pwm_top` interface, with hierarchical access to the internal counter only when required for counter-specific checks.
-
-Detailed internal implementation verification of `pwm_registers` and `pwm_generator` is not treated as a separate unit-level verification scope in this testbench.
 
 ## Expected Verification Outcome
 
