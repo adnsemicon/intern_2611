@@ -1,64 +1,64 @@
-# RTL Simulation Starter
+# Round Robin Arbiter Verification Environment
 
-This repository is a small SystemVerilog project that compiles and runs with the
-Xilinx Vivado Simulator command-line tools.
+This repository contains the SystemVerilog RTL and verification testbench for an $N$-input Round Robin Arbiter, configured for simulation with the Xilinx Vivado Simulator (`xvlog`, `xelab`, `xsim`).
 
-## Project layout
+## Project Layout
 
 ```text
-source/       RTL design files (.sv)
-include/      Files referenced by SystemVerilog `include directives
-testbench/    Testbench and simulation top-level files (.sv); also an include search path
-build/        Generated simulator files and logs
+source/
+  ├── grant_generator.sv          # Combinational grant arbiter logic
+  ├── priority_generator.sv       # Priority sequence rotator
+  └── round_robin_arbiter.sv      # Top-level arbiter module
+interface/
+  └── round_robin_arbiter_if.sv   # Interface connecting DUT & TB
+testbench/
+  ├── tb_round_robin_arbiter.sv   # Top-level testbench & common task definitions
+  └── Round_robin_tb/             # Modular test case task files
+      ├── tc1.sv                  # Reset verification
+      ├── tc2.sv                  # Single request grant
+      ├── tc3.sv                  # Two-core contention
+      ├── tc4.sv                  # All-core rotating priority
+      ├── tc5.sv                  # Priority retention during idle
+      ├── tc6.sv                  # Wrap-around rotation
+      ├── tc7.sv                  # Dropping request handling
+      └── tc8.sv                  # Starvation prevention
 ```
 
-The Makefile currently collects `.sv` files directly inside `source/` and
-`testbench/` (not their subdirectories). Both `include/` and `testbench/` are
-include search paths. For example, `include/vip/tb_ess.sv` can be included as:
+---
 
-```systemverilog
-`include "vip/tb_ess.sv"
-```
+## Common Testbench Tasks
 
-A file directly inside `testbench/` can likewise be included by its filename:
+All teammates can call the following common tasks directly inside their test case files:
 
-```systemverilog
-`include "helper.sv"
-```
+| Task | Parameters | Description |
+| :--- | :--- | :--- |
+| `apply_reset(cycles)` | `int cycles = 2` | Asserts active-low reset, clears requests, and releases reset synchronously after `cycles` negative clock edges. |
+| `apply_and_check(req, exp, msg)` | `logic [N-1:0] req, exp; string msg` | Drives request at negative edge, verifies combinational grant against expected value, and waits for positive edge to update priority state. |
+| `check(ok, msg)` | `logic ok; string msg` | Self-checking assertion helper; increments pass/fail counters. |
 
-The simulation top-level defaults to `hello`, as set by `TOP` in the Makefile.
-To use a different top-level module, set `TOP` when invoking make, for example:
+---
 
-```sh
-make simulate TOP=my_testbench
-```
+## How Teammates Add and Run Their Test Case
 
-## Requirements
+1. **Write your test task** in `testbench/Round_robin_tb/tc1.sv`:
+   ```systemverilog
+   task automatic tc1();
+       $display("\n--- Running TC1 ---");
+       apply_reset();
+       apply_and_check(4'b0001, 4'b0001, "Core 0 request wins");
+   endtask
+   ```
 
-- GNU Make
-- Xilinx Vivado Simulator command-line tools (`xvlog`, `xelab`, and `xsim`)
+2. **Uncomment your test in [tb_round_robin_arbiter.sv](testbench/tb_round_robin_arbiter.sv)**:
+   - Uncomment the include:
+     ```systemverilog
+     `include "Round_robin_tb/tc1.sv"
+     ```
+   - Uncomment the call in `initial begin`:
+     ```systemverilog
+     tc1();
+     ```
 
-These tools must be available on your `PATH`. The Makefile also uses common
-Unix shell utilities (`find` and `rm`); on Windows, run it from an environment
-that provides them, such as Git Bash.
-
-## Make commands
-
-Run the default simulation:
-
-```sh
-make simulate
-```
-
-This target removes the existing `build/` directory, compiles the RTL and
-testbench with `xvlog`, elaborates the selected top-level with `xelab`, and
-runs it with `xsim`. Simulator output and generated files are placed in
-`build/`.
-
-Remove generated simulator files without running a simulation:
-
-```sh
-make clean
-```
-
-`make simulate` runs `make clean` automatically before each run.
+3. **Run Simulation**:
+   - In Vivado: Click **Run Simulation**.
+   - Or from terminal: `make simulate`
