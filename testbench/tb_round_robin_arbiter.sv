@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+
 
 `include "round_robin_arbiter_if.sv"
 
@@ -90,7 +90,7 @@ module tb_round_robin_arbiter;
     end
   endtask
 
-  // `include "Round_robin_tb/tc1.sv"
+   `include "Round_robin_tb/tc1.sv"
   // `include "Round_robin_tb/tc2.sv"
 
   // =========================================================================
@@ -122,7 +122,7 @@ module tb_round_robin_arbiter;
     // 4. RUN TESTS
     // To run your test, simply uncomment its call below:
     // =======================================================================
-    // tc1();
+     tc1();
     // tc2();
 
     // 5. Final summary report and simulation finish
