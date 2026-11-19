@@ -92,6 +92,8 @@ module tb_round_robin_arbiter;
 
    `include "Round_robin_tb/tc1.sv"
    `include "Round_robin_tb/tc2.sv"
+   `include "Round_robin_tb/tc3.sv"
+   `include "Round_robin_tb/tc4.sv"
 
   // =========================================================================
   // MAIN INITIAL BLOCK
@@ -120,10 +122,12 @@ module tb_round_robin_arbiter;
 
     // =======================================================================
     // 4. RUN TESTS
-    // To run your test, simply uncomment its call below:
+    // To run a specific test, simply uncomment its call below:
     // =======================================================================
-     tc1();
-     tc2();
+    tc1();
+    tc2();
+    tc3();
+    tc4();
 
     // 5. Final summary report and simulation finish
     report_summary();

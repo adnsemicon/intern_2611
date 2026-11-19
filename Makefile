@@ -12,7 +12,9 @@ FILES += $(shell [ -d $(CURDIR)/testbench ] && find $(CURDIR)/testbench -maxdept
 
 .DEFAULT_GOAL = help
 
-.PHONY: simulate
+.PHONY: all simulate run clean help
+
+all: simulate
 simulate:
 	@make -s clean
 	@mkdir -p build

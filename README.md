@@ -14,14 +14,10 @@ interface/
 testbench/
   ├── tb_round_robin_arbiter.sv   # Top-level testbench & common task definitions
   └── Round_robin_tb/             # Modular test case task files
-      ├── tc1.sv                  # Reset verification
-      ├── tc2.sv                  # Single request grant
-      ├── tc3.sv                  # Two-core contention
-      ├── tc4.sv                  # All-core rotating priority
-      ├── tc5.sv                  # Priority retention during idle
-      ├── tc6.sv                  # Wrap-around rotation
-      ├── tc7.sv                  # Dropping request handling
-      └── tc8.sv                  # Starvation prevention
+      ├── tc1.sv                  # Priority selection verification
+      ├── tc2.sv                  # Priority preservation during idle
+      ├── tc3.sv                  # Full rotation & wrap-around
+      └── tc4.sv                  # Starvation prevention & fairness
 ```
 
 ---
