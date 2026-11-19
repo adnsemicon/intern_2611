@@ -1,4 +1,5 @@
 TOP ?= tb_round_robin_arbiter
+TEST ?= all
 
 XVLOG ?= $(shell which xvlog.bat 2>/dev/null || which xvlog 2>/dev/null || echo xvlog)
 XELAB ?= $(shell which xelab.bat 2>/dev/null || which xelab 2>/dev/null || echo xelab)
@@ -21,7 +22,8 @@ simulate:
 	@echo "*" > build/.gitignore
 	@cd build && $(XVLOG) -sv $(FILES)
 	@cd build && $(XELAB) $(TOP) -s snap_$(TOP) -debug all
-	@cd build && $(XSIM) snap_$(TOP) -R
+	@printf "%s\n" "-R" "-testplusarg TEST=$(TEST)" "snap_$(TOP)" > build/xsim_args.txt
+	@cd build && $(XSIM) -f xsim_args.txt
 
 .PHONY: clean
 clean:
@@ -31,7 +33,7 @@ clean:
 help:
 	@echo ""
 	@echo "This repository is a SystemVerilog project for Round Robin Arbiter verification."
-	@echo -e "\033[1;34m  make simulate\033[0m \033[1;35m[TOP=<TB>]\033[0m\033[45G\033[1;32m# Run simulation\033[0m"
-	@echo -e "\033[1;34m  make clean\033[0m\033[45G\033[1;32m# Remove all temporary build files\033[0m"
+	@echo -e "\033[1;34m  make simulate\033[0m \033[1;35m[TOP=<TB>]\033[0m \033[1;35m[TEST=<tc1|tc2|tc3|tc4|all>]\033[0m\033[55G\033[1;32m# Run simulation\033[0m"
+	@echo -e "\033[1;34m  make clean\033[0m\033[55G\033[1;32m# Remove all temporary build files\033[0m"
 	@echo "Please read the README.md for further details"
 	@echo ""

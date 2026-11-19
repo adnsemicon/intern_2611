@@ -99,6 +99,10 @@ module tb_round_robin_arbiter;
   // MAIN INITIAL BLOCK
   // =========================================================================
   initial begin
+    int plusarg_status;
+    string test_name;
+    test_name = "all";
+
     pass_count = 0;
     fail_count = 0;
 
@@ -122,12 +126,23 @@ module tb_round_robin_arbiter;
 
     // =======================================================================
     // 4. RUN TESTS
-    // To run a specific test, simply uncomment its call below:
+    // Default runs all tests; pass +TEST=<name> or make TEST=tc<n> to run individual tests
     // =======================================================================
-    tc1();
-    tc2();
-    tc3();
-    tc4();
+    plusarg_status = $value$plusargs("TEST=%s", test_name);
+    $display("\n[TB] Running with TEST='%s'...", test_name);
+
+    case (test_name)
+      "tc1":    tc1();
+      "tc2":    tc2();
+      "tc3":    tc3();
+      "tc4":    tc4();
+      default: begin
+        tc1();
+        tc2();
+        tc3();
+        tc4();
+      end
+    endcase
 
     // 5. Final summary report and simulation finish
     report_summary();
