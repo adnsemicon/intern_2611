@@ -1,24 +1,18 @@
 `timescale 1ns/1ps
 
+`include "round_robin_arbiter_if.sv"
+
 module tb_round_robin_arbiter;
 
-  `include "vip/round_robin_arbiter_if.sv"
-
-  // LOCAL PARAMETERS
+  // LOCAL PARAMETERS (Core count: 4, 8, etc.)
   localparam int N = 4;
 
-  // SIGNALS
-  logic clk_i;
-  logic arst_ni;
-
+  // PASS / FAIL COUNTERS
   int pass_count;
   int fail_count;
 
   // INTERFACE INSTANTIATION
-  round_robin_arbiter_if #(.N(N)) intf (
-      .clk_i   (clk_i),
-      .arst_ni (arst_ni)
-  );
+  round_robin_arbiter_if #(.N(N)) intf ();
 
   // DUT INSTANTIATION
   round_robin_arbiter #(
@@ -26,69 +20,100 @@ module tb_round_robin_arbiter;
   ) dut (
       .clk_i   (intf.clk_i),
       .arst_ni (intf.arst_ni),
-      .req_i   (intf.req),
-      .gnt_o   (intf.gnt)
+      .req_i   (intf.req_i),
+      .gnt_o   (intf.gnt_o)
   );
 
-  // METHODS
+  // =========================================================================
+  // COMMON TASKS (All teammates can call these directly from their testcases)
+  // =========================================================================
 
-  // Clock generation task
-  task automatic start_clock();
+  // 1. Clock Generation Task
+  task automatic start_clock(input int half_period_ns = 5);
     fork
-      forever #5 clk_i = ~clk_i;
+      forever #half_period_ns intf.clk_i = ~intf.clk_i;
     join_none
   endtask
 
-  // Reset task
-  task automatic apply_reset();
-    arst_ni  = 0;
-    intf.req = '0;
-    #2;
-    @(negedge clk_i);
-    arst_ni  = 1;
+  // 2. Reset Task: asserts active-low reset, clears requests, releases synchronously
+  task automatic apply_reset(input int reset_cycles = 2);
+    intf.arst_ni = 1'b0;
+    intf.req_i   = '0;
+    repeat (reset_cycles) @(negedge intf.clk_i);
+    intf.arst_ni = 1'b1;
     #1;
   endtask
 
-  // Check task
+  // 3. Self-Checking Assertion Task: increments pass/fail count and prints log
   task automatic check(input logic ok, input string msg);
     if (ok) begin
       pass_count++;
-      $display("[PASS] %s", msg);
+      $display("[PASS] @ %0t | %s", $time, msg);
     end else begin
       fail_count++;
-      $display("[FAIL] %s", msg);
+      $display("[FAIL] @ %0t | %s", $time, msg);
     end
   endtask
 
-  // Apply request and check grant
+  // 4. Drive Request and Check Grant (Workhorse task: drives at negedge, checks combinational grant, advances clock)
   task automatic apply_and_check(
       input logic [N-1:0] request,
       input logic [N-1:0] expected,
       input string        msg
   );
-    @(negedge clk_i);
-    intf.req = request;
+    @(negedge intf.clk_i);
+    intf.req_i = request;
 
-    // Check combinational grant before clock update
+    // Check combinational grant output before next posedge
     #1;
-    check(intf.gnt === expected, $sformatf("%s (expected=%b, got=%b)", msg, expected, intf.gnt));
+    check(intf.gnt_o === expected, $sformatf("%s (expected=%b, got=%b)", msg, expected, intf.gnt_o));
 
-    // Allow priority state to update
-    @(posedge clk_i);
+    // Allow clock edge for arbiter priority state to update
+    @(posedge intf.clk_i);
     #1;
   endtask
 
-  // TEST CASES
-  `include "Round_robin_tb/tc1.sv"
-  `include "Round_robin_tb/tc2.sv"
-  `include "Round_robin_tb/tc3.sv"
-  `include "Round_robin_tb/tc4.sv"
-  `include "Round_robin_tb/tc5.sv"
-  `include "Round_robin_tb/tc6.sv"
-  `include "Round_robin_tb/tc7.sv"
-  `include "Round_robin_tb/tc8.sv"
+  // 5. Summary Reporting Task
+  task automatic report_summary();
+    $display("\n========================================================");
+    $display("                TESTBENCH EXECUTION SUMMARY             ");
+    $display("========================================================");
+    $display(" Tests PASSED  : %0d", pass_count);
+    $display(" Tests FAILED  : %0d", fail_count);
+    $display("========================================================");
+    if (fail_count != 0) begin
+      $fatal(1, "[FATAL] tb_round_robin_arbiter finished with %0d failures!", fail_count);
+    end else if (pass_count > 0) begin
+      $display("[SUCCESS] All checks completed successfully!\n");
+    end else begin
+      $display("[INFO] Simulation finished with 0 checks executed.\n");
+    end
+  endtask
 
-  // MAIN INITIAL
+  // =========================================================================
+  // TEST CASES
+  // =========================================================================
+  // HOW TO ADD AND RUN YOUR TEST (SIMPLE 3 STEPS):
+  // 1. Write your test inside Round_robin_tb/ (e.g. Round_robin_tb/tc1.sv).
+  //    Inside it, use the common tasks:
+  //        task automatic tc1();
+  //            apply_reset();
+  //            apply_and_check(4'b0001, 4'b0001, "Core 0 wins");
+  //        endtask
+  //
+  // 2. Uncomment the `include below:
+  //        `include "Round_robin_tb/tc1.sv"
+  //
+  // 3. Uncomment your test call in the initial block below:
+  //        tc1();
+  // =========================================================================
+
+  // `include "Round_robin_tb/tc1.sv"
+  // `include "Round_robin_tb/tc2.sv"
+
+  // =========================================================================
+  // MAIN INITIAL BLOCK
+  // =========================================================================
   initial begin
     pass_count = 0;
     fail_count = 0;
@@ -97,35 +122,31 @@ module tb_round_robin_arbiter;
     $dumpfile("tb_round_robin_arbiter.vcd");
     $dumpvars(0, tb_round_robin_arbiter);
 
-    // Initial reset: Clock is held idle, active-low reset asserted
-    clk_i    = 0;
-    arst_ni  = 0;
-    intf.req = '0;
-    #20;
-    arst_ni  = 1;  // De-assert reset
+    // 1. Initial state: hold clock low and active-low reset asserted
+    intf.clk_i   = 1'b0;
+    intf.arst_ni = 1'b0;
+    intf.req_i   = '0;
     #20;
 
-    // Start clock after reset
+    // 2. Release reset
+    intf.arst_ni = 1'b1;
+    #20;
+
+    // 3. Start clock
     start_clock();
-    @(posedge clk_i);
+    @(posedge intf.clk_i);
 
-    // Run all tests
-    $display("Running all tests (1 through 8)...");
-    tc1();
-    tc2();
-    tc3();
-    tc4();
-    tc5();
-    tc6();
-    tc7();
-    tc8();
+    // =======================================================================
+    // 4. RUN TESTS
+    // To run your test, simply uncomment its call below:
+    // =======================================================================
+    // tc1();
+    // tc2();
 
-    // Summary
-    $display("tb_round_robin_arbiter summary: pass=%0d fail=%0d", pass_count, fail_count);
-    if (fail_count != 0) begin
-      $fatal(1, "tb_round_robin_arbiter failed with %0d errors", fail_count);
-    end
+    // 5. Final summary report and simulation finish
+    report_summary();
     $finish;
   end
 
 endmodule
+
