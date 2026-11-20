@@ -15,9 +15,6 @@ module tb_round_robin_arbiter #(
   int fail_count;
   string test_name;
 
-  // CLOCK CONTROL
-  bit clk_en = 0;
-
   // INTERFACE INSTANTIATION
   round_robin_arbiter_if #(.N(N)) intf ();
 
@@ -35,30 +32,15 @@ module tb_round_robin_arbiter #(
   // COMMON TASKS (All teammates can call these directly from their testcases)
   // =========================================================================
 
-  // 1. Clock Generation Task (controlled by clk_en)
+  // 1. Clock Generation Task
   task automatic start_clock(input int half_period_ns = 5);
     fork
-      forever begin
-        #half_period_ns;
-        if (clk_en) intf.clk_i = ~intf.clk_i;
-      end
+      forever #half_period_ns intf.clk_i = ~intf.clk_i;
     join_none
   endtask
 
-  // 2. Power-on Reset: clock stopped during reset, starts after release (use at time 0)
-  task automatic apply_reset(input int reset_ns = 22, input int clk_start_delay_ns = 12);
-    clk_en       = 0;
-    intf.clk_i   = 1'b0;      // clock held low during reset
-    intf.arst_ni = 1'b0;
-    intf.req_i   = '0;
-    #reset_ns;
-    intf.arst_ni = 1'b1;      // reset releases first
-    #clk_start_delay_ns;
-    clk_en = 1;               // clock starts after reset is high
-  endtask
-
-  // 3. Mid-test Reset: synchronous reset across clock cycles (needs a running clock)
-  task automatic apply_reset_cycles(input int reset_cycles = 2);
+  // 2. Reset Task: asserts active-low reset, clears requests, releases synchronously
+  task automatic apply_reset(input int reset_cycles = 2);
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
     repeat (reset_cycles) @(negedge intf.clk_i);
@@ -171,14 +153,19 @@ module tb_round_robin_arbiter #(
     $dumpfile("tb_round_robin_arbiter.vcd");
     $dumpvars(0, tb_round_robin_arbiter);
 
-    // 1. Initial state: hold reset active from t=0
+    // 1. Initial power-on state: hold reset active and clock low
     intf.clk_i   = 1'b0;
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
+    #20;
 
-    // 2. Start clock and apply initial reset
-    start_clock();     // once
-    apply_reset();     // reset low -> release -> clock starts
+    // 2. Release reset first
+    intf.arst_ni = 1'b1;
+    #10;
+
+    // 3. Start clock ONCE here and let it run!
+    start_clock();
+    @(posedge intf.clk_i);
  
 
     // =======================================================================
