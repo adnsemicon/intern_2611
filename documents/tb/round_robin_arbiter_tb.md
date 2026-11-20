@@ -69,7 +69,7 @@ The testbench is structured into a modular, self-checking SystemVerilog environm
 - **Modular Test Cases (`Round_robin_tb/`)**:
   - `tc1.sv`: Full Rotation & Wrap-Around
   - `tc2.sv`: Starvation Prevention & Fairness
-  - `tc3.sv`: Priority Selection
+  - `tc3.sv`: Sequential State Rotation
   - `tc4.sv`: Priority Preservation
   - `tc5.sv`: Fault Injection & Checker Validation
   - `tc6.sv`: Request Glitch Between Edges
@@ -87,7 +87,7 @@ The testbench is structured into a modular, self-checking SystemVerilog environm
 | :---: | :--- | :--- | :---: | :--- | :---: |
 | **TC1** | **Full Rotation & Wrap-Around** | Drives continuous simultaneous requests across 2 full round-robin rotations ($0 \to 1 \to 2 \to 3 \to 0 \dots$) to confirm wrap-around. | 8 | `make simulate TEST=tc1` | **PASS (8/8)** |
 | **TC2** | **Starvation Prevention & Fairness** | Competes aggressive Master 0 against victim Master 3; verifies Master 3 is serviced within 1 cycle. | 2 | `make simulate TEST=tc2` | **PASS (2/2)** |
-| **TC3** | **Priority Selection** | Verifies single-master requests and multi-master conflicts against initial priority hierarchy ($M_0 > M_1 > M_2 > M_3$). | 10 | `make simulate TEST=tc3` | **PASS (10/10)** |
+| **TC3** | **Sequential State Rotation** | Verifies consecutive multi-master requests without intermediate resets dynamically rotate priority pointer across grant cycles. | 10 | `make simulate TEST=tc3` | **PASS (10/10)** |
 | **TC4** | **Priority Preservation** | Verifies priority state holds steady during idle cycles after reset, after $M_0$ grant, and after $M_2$ grant. | 20 | `make simulate TEST=tc4` | **PASS (20/20)** |
 | **TC5** | **Fault Injection & Checker Validation** | Deliberately corrupts expected grant value to verify that the self-checker flags `[FAIL]` and halts simulation via `$fatal`. | 2 | `make simulate TEST=tc5` | **1 PASS, 1 FAIL** (halts on `$fatal`) |
 | **TC6** | **Request Glitch Between Edges** | Verifies short request pulses between clock edges do not cause premature priority rotation. | 2 | `make simulate TEST=tc6` | **PASS (2/2)** |

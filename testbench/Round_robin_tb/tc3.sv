@@ -1,10 +1,11 @@
 // ============================================================
-// TESTCASE 3: PRIORITY SELECTION
+// TESTCASE 3: SEQUENTIAL STATE ROTATION
 // ============================================================
 //
 // Objective:
-// Verify that the arbiter selects the highest-priority
-// requesting master according to the initial priority order.
+// Verify that consecutive requests without intermediate resets
+// dynamically rotate the arbiter priority pointer across grant
+// cycles according to the round-robin scheme.
 //
 // Initial Priority:
 // Master 0 > Master 1 > Master 2 > Master 3
@@ -14,59 +15,57 @@
 task automatic tc3();
 
     $display("\n==========================================");
-    $display("       TESTCASE 3: PRIORITY SELECTION     ");
+    $display("    TESTCASE 3: SEQUENTIAL STATE ROTATION ");
     $display("==========================================");
 
-    // --------------------------------------------------------
-    // Test 1: Only Master 0 requests
-    // --------------------------------------------------------
+    // Initial reset to establish known starting order: [0, 1, 2, 3]
     apply_reset();
 
+    // --------------------------------------------------------
+    // Step 1: Only Master 0 requests -> M0 granted
+    // State rotates to: Master 1 > Master 2 > Master 3 > Master 0
+    // --------------------------------------------------------
     apply_and_check(
         4'b0001,
         4'b0001,
-        "TC3.1: Only Master 0 requests"
+        "TC3.1: Only Master 0 requests, Master 0 granted"
     );
 
     // --------------------------------------------------------
-    // Test 2: Only Master 1 requests
+    // Step 2: Only Master 1 requests -> M1 granted
+    // State rotates to: Master 2 > Master 3 > Master 0 > Master 1
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b0010,
         4'b0010,
-        "TC3.2: Only Master 1 requests"
+        "TC3.2: Only Master 1 requests, Master 1 granted"
     );
 
     // --------------------------------------------------------
-    // Test 3: Only Master 2 requests
+    // Step 3: Only Master 2 requests -> M2 granted
+    // State rotates to: Master 3 > Master 0 > Master 1 > Master 2
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b0100,
         4'b0100,
-        "TC3.3: Only Master 2 requests"
+        "TC3.3: Only Master 2 requests, Master 2 granted"
     );
 
     // --------------------------------------------------------
-    // Test 4: Only Master 3 requests
+    // Step 4: Only Master 3 requests -> M3 granted
+    // State rotates to: Master 0 > Master 1 > Master 2 > Master 3 (full wrap)
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b1000,
         4'b1000,
-        "TC3.4: Only Master 3 requests"
+        "TC3.4: Only Master 3 requests, Master 3 granted"
     );
 
     // --------------------------------------------------------
-    // Test 5: All masters request
-    // Highest priority Master 0 must win
+    // Step 5: All masters request (4'b1111)
+    // Current priority: M0 > M1 > M2 > M3 -> Master 0 wins
+    // State rotates to: Master 1 > Master 2 > Master 3 > Master 0
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b1111,
         4'b0001,
@@ -74,11 +73,10 @@ task automatic tc3();
     );
 
     // --------------------------------------------------------
-    // Test 6: Masters 1, 2, 3 request
-    // Master 1 has highest priority
+    // Step 6: Masters 1, 2, 3 request (4'b1110)
+    // Current priority: M1 > M2 > M3 > M0 -> Master 1 wins
+    // State rotates to: Master 2 > Master 3 > Master 0 > Master 1
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b1110,
         4'b0010,
@@ -86,11 +84,10 @@ task automatic tc3();
     );
 
     // --------------------------------------------------------
-    // Test 7: Masters 2 and 3 request
-    // Master 2 has higher priority
+    // Step 7: Masters 2 and 3 request (4'b1100)
+    // Current priority: M2 > M3 > M0 > M1 -> Master 2 wins
+    // State rotates to: Master 3 > Master 0 > Master 1 > Master 2
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b1100,
         4'b0100,
@@ -98,23 +95,21 @@ task automatic tc3();
     );
 
     // --------------------------------------------------------
-    // Test 8: Masters 1 and 3 request
-    // Master 1 has higher priority
+    // Step 8: Masters 1 and 3 request (4'b1010)
+    // Current priority: M3 > M0 > M1 > M2 -> Master 3 wins due to rotation!
+    // State rotates to: Master 0 > Master 1 > Master 2 > Master 3
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b1010,
-        4'b0010,
-        "TC3.8: Masters 1,3 request, Master 1 wins"
+        4'b1000,
+        "TC3.8: Masters 1,3 request, Master 3 wins (rotated priority: M3 > M0 > M1 > M2)"
     );
 
     // --------------------------------------------------------
-    // Test 9: Masters 0 and 3 request
-    // Master 0 has higher priority
+    // Step 9: Masters 0 and 3 request (4'b1001)
+    // Current priority: M0 > M1 > M2 > M3 -> Master 0 wins
+    // State rotates to: Master 1 > Master 2 > Master 3 > Master 0
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b1001,
         4'b0001,
@@ -122,17 +117,16 @@ task automatic tc3();
     );
 
     // --------------------------------------------------------
-    // Test 10: Masters 1 and 2 request
-    // Master 1 has higher priority
+    // Step 10: Masters 1 and 2 request (4'b0110)
+    // Current priority: M1 > M2 > M3 > M0 -> Master 1 wins
+    // State rotates to: Master 2 > Master 3 > Master 0 > Master 1
     // --------------------------------------------------------
-    apply_reset();
-
     apply_and_check(
         4'b0110,
         4'b0010,
         "TC3.10: Masters 1,2 request, Master 1 wins"
     );
 
-    $display("\n[TC3] Priority Selection Test Completed.\n");
+    $display("\n[TC3] Sequential State Rotation Test Completed.\n");
 
 endtask
