@@ -21,30 +21,26 @@ FILES += $(shell [ -d $(CURDIR)/testbench ] && find $(CURDIR)/testbench -maxdept
 
 all: simulate
 simulate:
-	@make -s depression
-	@make -s clean
 	@mkdir -p build
 	@echo "*" > build/.gitignore
-	@cd build && xvlog -sv $(FILES)
-	@make -s depression
-	@cd build && xelab $(TOP) -s snap_$(TOP) -debug all
-	@make -s depression
-	@cd build && xsim snap_$(TOP) -R
-	@make -s depression
+	@cd build && $(XVLOG) -sv $(FILES)
+	@printf "%s\n" "-generic_top ERROR_INJECT=$(ERROR_INJECT)" "-s snap_$(TOP)" "-debug all" > build/xelab_args.txt
+	@cd build && $(XELAB) $(TOP) -f xelab_args.txt
+	@printf "%s\n" "-R" "-testplusarg TEST=$(TEST)" "snap_$(TOP)" > build/xsim_args.txt
+	@cd build && $(XSIM) -f xsim_args.txt
 
 .PHONY: clean
 clean:
 	@rm -rf build
-	@make -s depression
 
 .PHONY: help
 help:
 	@echo ""
-	@echo "This repository is a small SystemVerilog project that compiles and runs with the Xilinx Vivado Simulator command-line tools."
-	@echo -e "\033[0;34m  make simulate\033[0m \033[0;35mTOP=\033[0m\033[0;31m<TOP_MODULE_NAME>\033[0m\033[39G\033[0;32m# Simulated a module specificed by TOP=\033[0m"
-	@echo -e "\033[0;34m  make clean\033[0m\033[39G\033[0;32m# Remove all the temporary files\033[0m"
-	@echo "Please read the README.md for further details"
-	@make -s depression
+	@echo "This repository is a SystemVerilog project for Round Robin Arbiter verification."
+	@echo -e "\033[1;34m  make simulate\033[0m \033[1;35m[TOP=<TB>]\033[0m \033[1;35m[TEST=<tc1|...|tc10|all>]\033[0m \033[1;35m[ERROR_INJECT=<0|1>]\033[0m\033[55G\033[1;32m# Run simulation\033[0m"
+	@echo -e "\033[1;34m  make clean\033[0m\033[55G\033[1;32m# Remove all temporary build files\033[0m"
+	@echo "Please read documents/tb/round_robin_arbiter_tb.md for further details"
+	@echo ""
 
 .PHONY: depression
 depression:
