@@ -118,12 +118,37 @@ module tb_round_robin_arbiter #(
     end
   endtask
 
+  // 6. Fast Single-Cycle Drive Task
+  task automatic tc_drive(input logic [N-1:0] r);
+    @(negedge intf.clk_i);
+    intf.req_i = r;
+    #1;
+  endtask
+
+  // 7. Clear Requests / Idle Task
+  task automatic tc_idle();
+    @(negedge intf.clk_i);
+    intf.req_i = '0;
+    #1;
+  endtask
+
+  // 8. One-Hot Vector Generator Function
+  function automatic logic [N-1:0] tc_onehot(input int k);
+    tc_onehot    = '0;
+    tc_onehot[k] = 1'b1;
+  endfunction
+
+  // 9. Silent Check on Pass Task (keeps logs concise in large regression loops)
+  task automatic tc_chk(input logic ok, input string msg);
+    if (ok) pass_count++;
+    else    check(1'b0, msg);
+  endtask
+
    `include "Round_robin_tb/tc1.sv"
    `include "Round_robin_tb/tc2.sv"
    `include "Round_robin_tb/tc3.sv"
    `include "Round_robin_tb/tc4.sv"
    `include "Round_robin_tb/tc5.sv"
-   `include "Round_robin_tb/tc_helpers.sv"
    `include "Round_robin_tb/tc6.sv"
    `include "Round_robin_tb/tc7.sv"
    `include "Round_robin_tb/tc8.sv"

@@ -63,7 +63,7 @@ The testbench is structured into a modular, self-checking SystemVerilog environm
 - **Interface (`round_robin_arbiter_if`)**: Encapsulates `clk_i`, `arst_ni`, `req_i`, and `gnt_o`.
 - **Top Testbench (`tb_round_robin_arbiter`)**:
   - Instantiates DUT and interface.
-  - Implements reusable verification tasks (`apply_reset`, `apply_and_check`, `check`, `report_summary`).
+  - Implements reusable verification tasks (`apply_reset`, `apply_reset_cycles`, `apply_and_check`, `check`, `tc_drive`, `tc_idle`, `tc_onehot`, `tc_chk`, `report_summary`).
   - Supports dynamic test dispatching via command-line plusarg: `+TEST=<test_name>` (e.g. `TEST=tc1`, `TEST=tc6`, `TEST=all`).
   - Supports global fault injection via top-level parameter `ERROR_INJECT`.
 - **Modular Test Cases (`Round_robin_tb/`)**:
@@ -72,7 +72,6 @@ The testbench is structured into a modular, self-checking SystemVerilog environm
   - `tc3.sv`: Priority Selection
   - `tc4.sv`: Priority Preservation
   - `tc5.sv`: Fault Injection & Checker Validation
-  - `tc_helpers.sv`: Helper tasks (`tc_drive`, `tc_idle`, `tc_chk`, etc.)
   - `tc6.sv`: Request Glitch Between Edges
   - `tc7.sv`: Back-to-Back Resets
   - `tc8.sv`: No X/Z on Grant Output

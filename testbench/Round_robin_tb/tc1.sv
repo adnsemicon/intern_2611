@@ -39,8 +39,6 @@ task automatic tc1();
  $display(" TESTCASE 1: FULL ROTATION & WRAP-AROUND ");
  $display("==========================================");
 
- apply_reset();
-
  verify_rotation(2);
 
  $display("\n[TC1] Full Rotation & Wrap-Around Test Completed.\n");

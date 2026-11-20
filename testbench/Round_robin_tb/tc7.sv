@@ -6,8 +6,7 @@
 // Resets applied one after another, and a reset asserted while
 // reset is already active, must leave the default order.
 //
-// Needs: tc_helpers.sv
-//
+
 // ============================================================
 
 task automatic tc7();

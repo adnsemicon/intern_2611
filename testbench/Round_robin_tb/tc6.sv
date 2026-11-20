@@ -7,7 +7,7 @@
 // must not rotate the priority order. The order may only change
 // when a grant is present at a rising edge.
 //
-// Needs: tc_helpers.sv. Assumes the clock half period is > 3 ns.
+// Assumes the clock half period is > 3 ns.
 //
 // ============================================================
 

@@ -70,8 +70,6 @@ task automatic tc2();
  $display("TESTCASE 2: STARVATION PREVENTION & FAIRNESS");
  $display("==========================================");
 
- apply_reset();
-
  check_no_starvation(0, N - 1);
 
  $display("\n[TC2] Starvation Prevention & Fairness Test Completed.\n");
