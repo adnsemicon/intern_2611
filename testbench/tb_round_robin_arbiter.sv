@@ -39,13 +39,12 @@ module tb_round_robin_arbiter #(
     join_none
   endtask
 
-  // 2. Reset Task: asserts active-low reset, clears requests, releases synchronously
-  task automatic apply_reset(input int reset_cycles = 2);
+  // 2. Reset Task: simple asynchronous reset assertion and release
+  task automatic apply_reset();
     intf.arst_ni = 1'b0;
     intf.req_i   = '0;
-    repeat (reset_cycles) @(negedge intf.clk_i);
+    #20;
     intf.arst_ni = 1'b1;
-    #1;
   endtask
 
   // 3. Self-Checking Assertion Task: increments pass/fail count and prints log
