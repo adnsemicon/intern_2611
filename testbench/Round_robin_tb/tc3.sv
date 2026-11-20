@@ -1,48 +1,138 @@
-task automatic verify_rotation(input int num_rounds = 2);
-
- logic [N-1:0] expected_gnt;
- logic [N-1:0] check_expected;
-
- $display("[TC3] Verifying %0d complete round-robin rotations for N=%0d cores...",
-          num_rounds, N);
-
- @(negedge intf.clk_i);
- intf.req_i = '1;
-
- for (int round = 0; round < num_rounds; round++) begin
-   for (int core = 0; core < N; core++) begin
-
-     expected_gnt = (1 << core);
-     check_expected = (ERROR_INJECT) ? ~expected_gnt : expected_gnt;
-
-     #1;
-
-     check(intf.gnt_o === check_expected,
-           $sformatf("Rotation round %0d: expected core %0d grant (%b), got %b%s",
-                     round, core, check_expected, intf.gnt_o,
-                     ERROR_INJECT ? " [FAULT INJECTED]" : ""));
-
-     @(negedge intf.clk_i);
-
-   end
- end
-
- intf.req_i = '0;
- #1;
-
-endtask
-
+// ============================================================
+// TESTCASE 3: PRIORITY SELECTION
+// ============================================================
+//
+// Objective:
+// Verify that the arbiter selects the highest-priority
+// requesting master according to the initial priority order.
+//
+// Initial Priority:
+// Master 0 > Master 1 > Master 2 > Master 3
+//
+// ============================================================
 
 task automatic tc3();
 
- $display("\n==========================================");
- $display(" TESTCASE 3: FULL ROTATION & WRAP-AROUND ");
- $display("==========================================");
+    $display("\n==========================================");
+    $display("       TESTCASE 3: PRIORITY SELECTION     ");
+    $display("==========================================");
 
- apply_reset();
+    // --------------------------------------------------------
+    // Test 1: Only Master 0 requests
+    // --------------------------------------------------------
+    apply_reset();
 
- verify_rotation(2);
+    apply_and_check(
+        4'b0001,
+        4'b0001,
+        "TC3.1: Only Master 0 requests"
+    );
 
- $display("\n[TC3] Full Rotation & Wrap-Around Test Completed.\n");
+    // --------------------------------------------------------
+    // Test 2: Only Master 1 requests
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b0010,
+        4'b0010,
+        "TC3.2: Only Master 1 requests"
+    );
+
+    // --------------------------------------------------------
+    // Test 3: Only Master 2 requests
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b0100,
+        4'b0100,
+        "TC3.3: Only Master 2 requests"
+    );
+
+    // --------------------------------------------------------
+    // Test 4: Only Master 3 requests
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b1000,
+        4'b1000,
+        "TC3.4: Only Master 3 requests"
+    );
+
+    // --------------------------------------------------------
+    // Test 5: All masters request
+    // Highest priority Master 0 must win
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b1111,
+        4'b0001,
+        "TC3.5: All masters request, Master 0 wins"
+    );
+
+    // --------------------------------------------------------
+    // Test 6: Masters 1, 2, 3 request
+    // Master 1 has highest priority
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b1110,
+        4'b0010,
+        "TC3.6: Masters 1,2,3 request, Master 1 wins"
+    );
+
+    // --------------------------------------------------------
+    // Test 7: Masters 2 and 3 request
+    // Master 2 has higher priority
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b1100,
+        4'b0100,
+        "TC3.7: Masters 2,3 request, Master 2 wins"
+    );
+
+    // --------------------------------------------------------
+    // Test 8: Masters 1 and 3 request
+    // Master 1 has higher priority
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b1010,
+        4'b0010,
+        "TC3.8: Masters 1,3 request, Master 1 wins"
+    );
+
+    // --------------------------------------------------------
+    // Test 9: Masters 0 and 3 request
+    // Master 0 has higher priority
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b1001,
+        4'b0001,
+        "TC3.9: Masters 0,3 request, Master 0 wins"
+    );
+
+    // --------------------------------------------------------
+    // Test 10: Masters 1 and 2 request
+    // Master 1 has higher priority
+    // --------------------------------------------------------
+    apply_reset();
+
+    apply_and_check(
+        4'b0110,
+        4'b0010,
+        "TC3.10: Masters 1,2 request, Master 1 wins"
+    );
+
+    $display("\n[TC3] Priority Selection Test Completed.\n");
 
 endtask
