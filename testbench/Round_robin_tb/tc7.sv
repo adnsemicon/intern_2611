@@ -1,53 +1,33 @@
 // ============================================================
-// TESTCASE 7: BACK-TO-BACK RESETS
+// TESTCASE 7: NO X OR Z ON THE GRANT OUTPUT
 // ============================================================
 //
 // Objective:
-// Resets applied one after another, and a reset asserted while
-// reset is already active, must leave the default order.
+// After reset, gnt_o must never contain X or Z, with or without
+// requests, including random request patterns.
 //
-
 // ============================================================
 
 task automatic tc7();
+    logic [N-1:0] r;
 
     $display("\n==========================================");
-    $display("       TESTCASE 7: BACK-TO-BACK RESETS     ");
+    $display("      TESTCASE 7: NO X/Z ON GRANT OUTPUT   ");
     $display("==========================================");
 
-    // --------------------------------------------------------
-    // Scenario A: two resets in a row after the order changed
-    // --------------------------------------------------------
-    apply_reset();
-    tc_drive('1);
-    tc_drive('1);                   // order has rotated
+    // Initial check with no requests
+    tc_drive('0);
+    check(!$isunknown(intf.gnt_o), "TC7.1: gnt_o is known with no request");
 
-    apply_reset();
-    apply_reset();
-
-    tc_drive('1);
-    check(intf.gnt_o === tc_onehot(0),
-          "TC7.A: master 0 wins after two resets in a row");
-
-    // --------------------------------------------------------
-    // Scenario B: reset asserted again while already active
-    // --------------------------------------------------------
-    apply_reset();
-    tc_drive('1);
-    tc_drive('1);                   // order has rotated (requests still high)
-
-    intf.arst_ni = 1'b0;            // reset
-    #2;
-    intf.arst_ni = 1'b0;            // asserted again while already active
-    @(negedge intf.clk_i);
-    intf.arst_ni = 1'b1;
-    intf.req_i   = '0;
-
-    tc_drive('1);
-    check(intf.gnt_o === tc_onehot(0),
-          "TC7.B: master 0 wins after reset asserted twice");
+    // Random requests
+    for (int c = 0; c < 2000; c++) begin
+        r = $urandom;
+        tc_drive(r);
+        tc_chk(!$isunknown(intf.gnt_o),
+               $sformatf("TC7: cycle %0d req=%b : gnt_o has X/Z (%b)", c, r, intf.gnt_o));
+    end
 
     tc_idle();
-    $display("\n[TC7] Back-To-Back Resets Test Completed.\n");
+    $display("\n[TC7] No X/Z Test Completed.\n");
 
 endtask

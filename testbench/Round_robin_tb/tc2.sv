@@ -16,12 +16,10 @@ task automatic tc2();
 
     // ========================================================
     // SCENARIO A:
-    // Priority preservation immediately after reset
+    // Priority preservation immediately after initial state
     // ========================================================
 
-    apply_reset();
-
-    $display("\n[TC2] Scenario A: Idle after reset");
+    $display("\n[TC2] Scenario A: Idle with initial priority (Master 0)");
 
     // No requests for 5 clock cycles
     repeat (5) begin
@@ -40,7 +38,7 @@ task automatic tc2();
     apply_and_check(
         4'b1111,
         4'b0001,
-        "TC2.A: Priority preserved after idle"
+        "TC2.A: Priority preserved after idle, Master 0 wins"
     );
 
 
@@ -48,8 +46,6 @@ task automatic tc2();
     // SCENARIO B:
     // Priority preservation after Master 0 wins
     // ========================================================
-
-    apply_reset();
 
     $display("\n[TC2] Scenario B: Idle after Master 0 grant");
 
@@ -87,8 +83,6 @@ task automatic tc2();
     // SCENARIO C:
     // Priority preservation after Master 2 wins
     // ========================================================
-
-    apply_reset();
 
     $display("\n[TC2] Scenario C: Idle after Master 2 grant");
 

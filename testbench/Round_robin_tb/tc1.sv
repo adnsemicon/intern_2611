@@ -18,9 +18,6 @@ task automatic tc1();
     $display("    TESTCASE 1: SEQUENTIAL STATE ROTATION ");
     $display("==========================================");
 
-    // Initial reset to establish known starting order: [0, 1, 2, 3]
-    apply_reset();
-
     // --------------------------------------------------------
     // Step 1: Only Master 0 requests -> M0 granted
     // State rotates to: Master 1 > Master 2 > Master 3 > Master 0
@@ -125,6 +122,28 @@ task automatic tc1();
         4'b0110,
         4'b0010,
         "TC1.10: Masters 1,2 request, Master 1 wins"
+    );
+
+    // --------------------------------------------------------
+    // Step 11: Masters 2 and 3 request (4'b1100)
+    // Current priority: M2 > M3 > M0 > M1 -> Master 2 wins
+    // State rotates to: Master 3 > Master 0 > Master 1 > Master 2
+    // --------------------------------------------------------
+    apply_and_check(
+        4'b1100,
+        4'b0100,
+        "TC1.11: Masters 2,3 request, Master 2 wins"
+    );
+
+    // --------------------------------------------------------
+    // Step 12: Masters 0 and 3 request (4'b1001)
+    // Current priority: M3 > M0 > M1 > M2 -> Master 3 wins due to rotation!
+    // State rotates to: Master 0 > Master 1 > Master 2 > Master 3 (full wrap)
+    // --------------------------------------------------------
+    apply_and_check(
+        4'b1001,
+        4'b1000,
+        "TC1.12: Masters 0,3 request, Master 3 wins (full wrap back to Master 0)"
     );
 
     $display("\n[TC1] Sequential State Rotation Test Completed.\n");

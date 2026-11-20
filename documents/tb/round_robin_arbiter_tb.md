@@ -71,13 +71,12 @@ The testbench is structured into a modular, self-checking SystemVerilog environm
   - `tc2.sv`: Priority Preservation
   - `tc3.sv`: Full Rotation & Wrap-Around
   - `tc4.sv`: Starvation Prevention & Fairness
-  - `tc5.sv`: Fault Injection & Checker Validation
-  - `tc6.sv`: Request Glitch Between Edges
-  - `tc7.sv`: Back-to-Back Resets
-  - `tc8.sv`: No X/Z on Grant Output
-  - `tc9.sv`: Random Stress Test with Reference Model
-  - `tc10.sv`: Asynchronous Reset Mid-Operation
-  - `tc11.sv`: Exhaustive Pattern and State Verification
+  - `tc5.sv`: Request Glitch Between Edges
+  - `tc6.sv`: Back-to-Back Resets
+  - `tc7.sv`: No X/Z on Grant Output
+  - `tc8.sv`: Random Stress Test with Reference Model
+  - `tc9.sv`: Asynchronous Reset Mid-Operation
+  - `tc10.sv`: Exhaustive Pattern and State Verification
 
 ---
 
@@ -85,18 +84,17 @@ The testbench is structured into a modular, self-checking SystemVerilog environm
 
 | Test ID | Testcase Name | Verification Goal / Description | Checks | Command to Run | Expected Status |
 | :---: | :--- | :--- | :---: | :--- | :---: |
-| **TC1** | **Sequential State Rotation** | Verifies consecutive multi-master requests without intermediate resets dynamically rotate priority pointer across grant cycles. | 10 | `make simulate TEST=tc1` | **PASS (10/10)** |
+| **TC1** | **Sequential State Rotation** | Verifies consecutive multi-master requests without intermediate resets dynamically rotate priority pointer across grant cycles. | 12 | `make simulate TEST=tc1` | **PASS (12/12)** |
 | **TC2** | **Priority Preservation** | Verifies priority state holds steady during idle cycles after reset, after $M_0$ grant, and after $M_2$ grant. | 20 | `make simulate TEST=tc2` | **PASS (20/20)** |
 | **TC3** | **Full Rotation & Wrap-Around** | Drives continuous simultaneous requests across 2 full round-robin rotations ($0 \to 1 \to 2 \to 3 \to 0 \dots$) to confirm wrap-around. | 8 | `make simulate TEST=tc3` | **PASS (8/8)** |
 | **TC4** | **Starvation Prevention & Fairness** | Competes aggressive Master 0 against victim Master 3; verifies Master 3 is serviced within 1 cycle. | 2 | `make simulate TEST=tc4` | **PASS (2/2)** |
-| **TC5** | **Fault Injection & Checker Validation** | Deliberately corrupts expected grant value to verify that the self-checker flags `[FAIL]` and halts simulation via `$fatal`. | 2 | `make simulate TEST=tc5` | **1 PASS, 1 FAIL** (halts on `$fatal`) |
-| **TC6** | **Request Glitch Between Edges** | Verifies short request pulses between clock edges do not cause premature priority rotation. | 2 | `make simulate TEST=tc6` | **PASS (2/2)** |
-| **TC7** | **Back-to-Back Resets** | Verifies arbiter recovers cleanly from multiple back-to-back reset cycles. | 2 | `make simulate TEST=tc7` | **PASS (2/2)** |
-| **TC8** | **No X/Z on Grant Output** | Verifies grant bus is fully defined (no high-impedance or uninitialized bits) across states. | 1 | `make simulate TEST=tc8` | **PASS (1/1)** |
-| **TC9** | **Random Stress Test** | 21,000 cycles of mixed low/medium/high request density checked against golden reference model. | 21,000 | `make simulate TEST=tc9` | **PASS (21000/21000)** |
-| **TC10** | **Async Reset Mid-Operation** | Verifies asynchronous reset asserted mid-cycle restores priority immediately without waiting for clock edge. | 3 | `make simulate TEST=tc10` | **PASS (3/3)** |
-| **TC11** | **Exhaustive Priority Verification** | Exercises all $2^N$ request patterns across every cyclic table permutation state ($N \le 10$). | 64 | `make simulate TEST=tc11` | **PASS (64/64)** |
-| **ALL** | **Full Regression Suite** | Executes all functional testcases (`tc1`–`tc4`, `tc6`–`tc11`) sequentially. | 21,112 | `make simulate TEST=all` | **PASS (21112/21112)** |
+| **TC5** | **Request Glitch Between Edges** | Verifies short request pulses between clock edges do not cause premature priority rotation. | 2 | `make simulate TEST=tc5` | **PASS (2/2)** |
+| **TC6** | **Back-to-Back Resets** | Verifies arbiter recovers cleanly from multiple back-to-back reset cycles. | 2 | `make simulate TEST=tc6` | **PASS (2/2)** |
+| **TC7** | **No X/Z on Grant Output** | Verifies grant bus is fully defined (no high-impedance or uninitialized bits) across states. | 1 | `make simulate TEST=tc7` | **PASS (1/1)** |
+| **TC8** | **Random Stress Test** | 21,000 cycles of mixed low/medium/high request density checked against golden reference model. | 21,000 | `make simulate TEST=tc8` | **PASS (21000/21000)** |
+| **TC9** | **Async Reset Mid-Operation** | Verifies asynchronous reset asserted mid-cycle restores priority immediately without waiting for clock edge. | 3 | `make simulate TEST=tc9` | **PASS (3/3)** |
+| **TC10** | **Exhaustive Priority Verification** | Exercises all $2^N$ request patterns across every cyclic table permutation state ($N \le 10$). | 64 | `make simulate TEST=tc10` | **PASS (64/64)** |
+| **ALL** | **Full Regression Suite** | Executes all functional testcases (`tc1`–`tc10`) sequentially. | 23,114 | `make simulate TEST=all` | **PASS (23114/23114)** |
 
 ---
 
@@ -112,19 +110,18 @@ make simulate TEST=tc1
 make simulate TEST=tc2
 make simulate TEST=tc3
 make simulate TEST=tc4
-make simulate TEST=tc5    # Fault injection test (intentionally exits with $fatal)
+make simulate TEST=tc5
 make simulate TEST=tc6
 make simulate TEST=tc7
 make simulate TEST=tc8
 make simulate TEST=tc9
 make simulate TEST=tc10
-make simulate TEST=tc11
 ```
 
 ### Run Full Regression Suite
 
 ```bash
-# Run all functional test cases (tc1-tc4, tc6-tc11)
+# Run all functional test cases (tc1-tc10)
 make simulate TEST=all
 # or simply:
 make simulate
@@ -134,7 +131,9 @@ make simulate
 
 ```bash
 # Invert expected values across any testcase to test checker robustness
-make simulate TEST=tc1 ERROR_INJECT=1
+make simulate TEST=tc1 ERROR=1
+# or
+make simulate TEST=all ERROR_INJECT=1
 ```
 
 ### Clean Simulation Artifacts

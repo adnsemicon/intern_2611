@@ -1,34 +1,41 @@
 // ============================================================
-// TESTCASE 5: FAULT INJECTION & CHECKER VALIDATION
+// TESTCASE 5: REQUEST GLITCH BETWEEN CLOCK EDGES
 // ============================================================
 //
 // Objective:
-// Deliberately inject a corrupted expected value to verify that
-// the testbench checker detects the error, logs [FAIL], and
-// report_summary() halts with $fatal.
+// A request that rises and falls between two rising clock edges
+// must not rotate the priority order. The order may only change
+// when a grant is present at a rising edge.
+//
+// Assumes the clock half period is > 3 ns.
 //
 // ============================================================
 
 task automatic tc5();
+
     $display("\n==========================================");
-    $display("       TESTCASE 5: FAULT INJECTION        ");
+    $display("   TESTCASE 5: REQUEST GLITCH BETWEEN EDGES");
     $display("==========================================");
 
-    apply_reset();
+    // Raise all requests at the falling edge and look at the grant
+    @(negedge intf.clk_i);
+    intf.req_i = '1;
+    #1;
+    check(intf.gnt_o === tc_onehot(0),
+          "TC5.1: master 0 is granted while the requests are high");
 
-    // 1. Normal valid transaction (expected to PASS)
-    apply_and_check(
-        4'b0001,
-        4'b0001,
-        "TC5.1: Normal valid check"
-    );
+    // Drop all requests 2 ns later, before the next rising edge
+    #2;
+    intf.req_i = '0;
+    @(posedge intf.clk_i);          // this rising edge sees no request
+    #1;
 
-    // 2. Injected mismatch: core 1 requests, but core 3 expected (expected to FAIL)
-    apply_and_check(
-        4'b0010,
-        4'b1000,
-        "TC5.2: Deliberate fault injection"
-    );
+    // Request again. If the glitch had rotated the order, another master would win
+    tc_drive('1);
+    check(intf.gnt_o === tc_onehot(0),
+          "TC5.2: order unchanged, master 0 wins again");
 
-    $display("\n[TC5] Fault Injection Test Completed.\n");
+    tc_idle();
+    $display("\n[TC5] Request Glitch Test Completed.\n");
+
 endtask

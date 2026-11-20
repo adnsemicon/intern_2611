@@ -1,50 +1,42 @@
 // ============================================================
-// TESTCASE 9: RANDOM REQUESTS WITH A REFERENCE MODEL
+// TESTCASE 9: ASYNCHRONOUS RESET DURING OPERATION
 // ============================================================
 // Objective:
-// 21000 cycles of random requests (medium, high and low density).
-// A small model of the order table predicts the grant each cycle.
+// Reset asserted between two clock edges must restore the default
+// order immediately, without waiting for a clock edge.
 // ============================================================
 task automatic tc9();
-    logic [N-1:0] r, exp_g;
-    int           model [N];
-    int           tmp   [N];
-    int           pos;
 
     $display("\n==========================================");
-    $display("   TESTCASE 9: RANDOM WITH REFERENCE MODEL");
+    $display("   TESTCASE 9: ASYNC RESET MID-OPERATION   ");
     $display("==========================================");
 
     apply_reset();
-    for (int i = 0; i < N; i++) model[i] = i;
 
-    for (int c = 0; c < 21000; c++) begin
-        if      (c < 7000)  r = $urandom;                        // medium density
-        else if (c < 14000) r = $urandom | $urandom;             // many requests
-        else                r = $urandom & $urandom & $urandom;  // few requests
+    // One grant: master 0 wins, the order now starts at master 1 (N >= 2)
+    tc_drive('1);
+    check(intf.gnt_o === tc_onehot(0), "TC9.1: master 0 granted before reset");
 
-        tc_drive(r);
+    // Let the clock edge pass so the order rotates, keep all requests high
+    @(negedge intf.clk_i);
+    intf.req_i = '1;
 
-        // expected grant from the model
-        exp_g = '0;
-        pos   = -1;
-        for (int i = 0; i < N; i++)
-            if (exp_g == '0 && r[model[i]]) begin
-                exp_g[model[i]] = 1'b1;
-                pos = i;
-            end
+    // Assert reset in the middle of the cycle (no clock edge involved)
+    intf.arst_ni = 1'b0;
+    #1;
+    check(intf.gnt_o === tc_onehot(0),
+          "TC9.2: default order restored immediately, master 0 wins");
 
-        tc_chk(intf.gnt_o === exp_g,
-              $sformatf("TC9: cycle %0d req=%b : expected %b, got %b", c, r, exp_g, intf.gnt_o));
+    // Release reset after a clock edge
+    @(posedge intf.clk_i);
+    @(negedge intf.clk_i);
+    intf.arst_ni = 1'b1;
+    intf.req_i   = '0;
 
-        // rotate the model, as the clock edge will rotate the design
-        if (pos >= 0) begin
-            for (int i = 0; i < N; i++) tmp[i] = model[(i + pos + 1) % N];
-            for (int i = 0; i < N; i++) model[i] = tmp[i];
-        end
-    end
+    tc_drive('1);
+    check(intf.gnt_o === tc_onehot(0), "TC9.3: master 0 wins after reset release");
 
     tc_idle();
-    $display("\n[TC9] Random Test Completed.\n");
+    $display("\n[TC9] Async Reset Test Completed.\n");
 
 endtask

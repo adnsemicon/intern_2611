@@ -1,42 +1,43 @@
 // ============================================================
-// TESTCASE 10: ASYNCHRONOUS RESET DURING OPERATION
+// TESTCASE 10: PRIORITY SELECTION IN EVERY TABLE STATE (EXHAUSTIVE)
 // ============================================================
 // Objective:
-// Reset asserted between two clock edges must restore the default
-// order immediately, without waiting for a clock edge.
+// Every request pattern (2^N) in every table state (order starting
+// at master 0, 1, ..., N-1). The winner must be the first requesting
+// master when scanning cyclically from the first master in the order.
 // ============================================================
 task automatic tc10();
+    logic [N-1:0] exp_g;
+    logic [N-1:0] pat;
 
     $display("\n==========================================");
-    $display("   TESTCASE 10: ASYNC RESET MID-OPERATION  ");
+    $display("  TESTCASE 10: EVERY PATTERN, EVERY STATE  ");
     $display("==========================================");
 
-    apply_reset();
+    if (N <= 10) begin
+        for (int s = 0; s < N; s++) begin
+            for (int p = 0; p < (1 << N); p++) begin
+                apply_reset();
+                if (s > 0) tc_drive(tc_onehot(s - 1));   // grant master s-1: order now starts at s
 
-    // One grant: master 0 wins, the order now starts at master 1 (N >= 2)
-    tc_drive('1);
-    check(intf.gnt_o === tc_onehot(0), "TC10.1: master 0 granted before reset");
+                pat = p;
+                tc_drive(pat);
 
-    // Let the clock edge pass so the order rotates, keep all requests high
-    @(negedge intf.clk_i);
-    intf.req_i = '1;
+                exp_g = '0;
+                for (int k = 0; k < N; k++)
+                    if (exp_g == '0 && pat[(s + k) % N])
+                        exp_g[(s + k) % N] = 1'b1;
 
-    // Assert reset in the middle of the cycle (no clock edge involved)
-    intf.arst_ni = 1'b0;
-    #1;
-    check(intf.gnt_o === tc_onehot(0),
-          "TC10.2: default order restored immediately, master 0 wins");
-
-    // Release reset after a clock edge
-    @(posedge intf.clk_i);
-    @(negedge intf.clk_i);
-    intf.arst_ni = 1'b1;
-    intf.req_i   = '0;
-
-    tc_drive('1);
-    check(intf.gnt_o === tc_onehot(0), "TC10.3: master 0 wins after reset release");
+                tc_chk(intf.gnt_o === exp_g,
+                      $sformatf("TC10: order starts at %0d, req=%b : expected %b, got %b",
+                                s, pat, exp_g, intf.gnt_o));
+            end
+        end
+    end else begin
+        $display("[TC10] Skipped: N=%0d is too large for the exhaustive test.", N);
+    end
 
     tc_idle();
-    $display("\n[TC10] Async Reset Test Completed.\n");
+    $display("\n[TC10] Exhaustive Priority Selection Test Completed.\n");
 
 endtask

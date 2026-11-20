@@ -1,43 +1,52 @@
 // ============================================================
-// TESTCASE 6: REQUEST GLITCH BETWEEN CLOCK EDGES
+// TESTCASE 6: BACK-TO-BACK RESETS
 // ============================================================
 //
 // Objective:
-// A request that rises and falls between two rising clock edges
-// must not rotate the priority order. The order may only change
-// when a grant is present at a rising edge.
-//
-// Assumes the clock half period is > 3 ns.
+// Resets applied one after another, and a reset asserted while
+// reset is already active, must leave the default order.
 //
 // ============================================================
 
 task automatic tc6();
 
     $display("\n==========================================");
-    $display("   TESTCASE 6: REQUEST GLITCH BETWEEN EDGES");
+    $display("       TESTCASE 6: BACK-TO-BACK RESETS     ");
     $display("==========================================");
 
+    // --------------------------------------------------------
+    // Scenario A: two resets in a row after the order changed
+    // --------------------------------------------------------
+    apply_reset();
+    tc_drive('1);
+    tc_drive('1);                   // order has rotated
+
+    apply_reset();
     apply_reset();
 
-    // Raise all requests at the falling edge and look at the grant
-    @(negedge intf.clk_i);
-    intf.req_i = '1;
-    #1;
-    check(intf.gnt_o === tc_onehot(0),
-          "TC6.1: master 0 is granted while the requests are high");
-
-    // Drop all requests 2 ns later, before the next rising edge
-    #2;
-    intf.req_i = '0;
-    @(posedge intf.clk_i);          // this rising edge sees no request
-    #1;
-
-    // Request again. If the glitch had rotated the order, another master would win
     tc_drive('1);
     check(intf.gnt_o === tc_onehot(0),
-          "TC6.2: order unchanged, master 0 wins again");
+          "TC6.A: master 0 wins after two resets in a row");
+
+    // --------------------------------------------------------
+    // Scenario B: reset asserted again while already active
+    // --------------------------------------------------------
+    apply_reset();
+    tc_drive('1);
+    tc_drive('1);                   // order has rotated (requests still high)
+
+    intf.arst_ni = 1'b0;            // reset
+    #2;
+    intf.arst_ni = 1'b0;            // asserted again while already active
+    @(negedge intf.clk_i);
+    intf.arst_ni = 1'b1;
+    intf.req_i   = '0;
+
+    tc_drive('1);
+    check(intf.gnt_o === tc_onehot(0),
+          "TC6.B: master 0 wins after reset asserted twice");
 
     tc_idle();
-    $display("\n[TC6] Request Glitch Test Completed.\n");
+    $display("\n[TC6] Back-To-Back Resets Test Completed.\n");
 
 endtask

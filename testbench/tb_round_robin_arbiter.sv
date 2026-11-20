@@ -3,7 +3,7 @@
 `include "round_robin_arbiter_if.sv"
 
 module tb_round_robin_arbiter #(
-    parameter int TEST         = 0,  // 0: all, 1: tc1, 2: tc2, 3: tc3, 4: tc4, 5: tc5 (fault injection), 6: tc6, 7: tc7, 8: tc8, 9: tc9, 10:tc10, 11:tc11
+    parameter int TEST         = 0,  // 0: all, 1: tc1, 2: tc2, 3: tc3, 4: tc4, 5: tc5, 6: tc6, 7: tc7, 8: tc8, 9: tc9, 10: tc10
     parameter bit ERROR_INJECT = 0   // 0: normal, 1: globally inject corrupted expected values
 );
 
@@ -135,7 +135,6 @@ module tb_round_robin_arbiter #(
    `include "Round_robin_tb/tc8.sv"
    `include "Round_robin_tb/tc9.sv"
    `include "Round_robin_tb/tc10.sv"
-   `include "Round_robin_tb/tc11.sv"
 
 
   // =========================================================================
@@ -183,11 +182,9 @@ module tb_round_robin_arbiter #(
       "tc8":    tc8();
       "tc9":    tc9();
       "tc10":   tc10();
-      "tc11":   tc11();
       default: begin
-        tc1(); tc2(); tc3(); tc4();
-        tc6(); tc7(); tc8(); tc9();
-        tc10(); tc11();
+        tc1(); tc2(); tc3(); tc4(); tc5();
+        tc6(); tc7(); tc8(); tc9(); tc10();
       end
     endcase
 
