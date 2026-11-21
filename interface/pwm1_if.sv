@@ -1,3 +1,4 @@
+//For a synthesizable interface, which can be used in RTL code
 interface pwm1_if #(
     parameter int NUM_CHANNELS = 8,
     parameter int ADDR_WIDTH   = 4,
@@ -13,8 +14,13 @@ interface pwm1_if #(
     logic [DATA_WIDTH-1:0]   rdata_o;
     logic [NUM_CHANNELS-1:0] pwm_o;
 
-    // Modport for the design (pwm_top): defines signal directions
-    modport DUT (
+    //Master: Modport for Controller driving the PWM block 
+     modport master (
+        input  clk_i, arst_ni, rdata_o, pwm_o,
+        output addr_i, wdata_i, wen_i
+    );
+    //Slave (DUT): Modport for the design (pwm_top): defines signal directions 
+    modport slave (
         input  clk_i, arst_ni, addr_i, wdata_i, wen_i,
         output rdata_o, pwm_o
     );
