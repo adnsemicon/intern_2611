@@ -61,11 +61,11 @@ The parameter table describes the configurable design parameters.
 ## Top-Level Ports
 
 The top-level signals are grouped in the SystemVerilog interface `pwm_if`
-(modport `DUT`).
+(modport `slave`).
 
 | Port | Type | Description |
 |---|---|---|
-| `vif` | `pwm_if.DUT` | Interface containing all signals listed below |
+| `vif` | `pwm_if.SLAVE` | Interface containing all signals listed below |
 
 
 
@@ -382,6 +382,13 @@ The exact reset values of the duty-cycle registers, enable register, and counter
 
 The intended safe output behavior is for all PWM outputs to remain LOW during reset.
 
+
+
+## Interface
+
+• Synthesizable Interface (pwm1_if): Connects directly to the pwm_top DUT via pwm_if.SLAVE. Contains only physical signals and modports.
+
+• Non-Synthesizable Interface (pwm_if): Resides exclusively in tb_top. Contains procedural task definitions (and optional clocking blocks) to drive register reads and writes.
 
 
 
